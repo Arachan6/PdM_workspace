@@ -5,12 +5,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Src/liquidcrystal_i2c.c \
 ../Src/main.c 
 
 OBJS += \
+./Src/liquidcrystal_i2c.o \
 ./Src/main.o 
 
 C_DEPS += \
+./Src/liquidcrystal_i2c.d \
 ./Src/main.d 
 
 
@@ -21,7 +24,7 @@ Src/%.o Src/%.su Src/%.cyclo: ../Src/%.c Src/subdir.mk
 clean: clean-Src
 
 clean-Src:
-	-$(RM) ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su
+	-$(RM) ./Src/liquidcrystal_i2c.cyclo ./Src/liquidcrystal_i2c.d ./Src/liquidcrystal_i2c.o ./Src/liquidcrystal_i2c.su ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su
 
 .PHONY: clean-Src
 
