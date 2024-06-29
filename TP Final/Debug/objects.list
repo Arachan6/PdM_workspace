@@ -96,6 +96,8 @@
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usart.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.o"
+"./Src/hd44780.o"
+"./Src/hd44780_port.o"
 "./Src/liquidcrystal_i2c.o"
 "./Src/main.o"
 "./Startup/startup_stm32f429zitx.o"

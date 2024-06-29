@@ -1,0 +1,39 @@
+/*
+ * HAL_myDelay.c
+ *
+ *  Created on: Jun 29, 2024
+ *      Author: felipe
+ */
+#include "HAL_myDelay.h"
+
+void delayInit(delay_t* delay, tick_t duration){
+
+	if(delay == NULL){Error_Handler();}
+
+	delay->running = false;
+	delay->startTime = 0;
+	delay->duration = duration;
+}
+
+bool delayRead(delay_t* delay){
+
+	if(delay == NULL){Error_Handler();}
+
+	if (delay->running == false){
+		delay->running = true;
+		delay->startTime = HAL_getTick();
+		return false;
+	}
+
+	if ((HAL_getTick() - delay->startTime) >= delay->duration){
+		delay->running = false;
+		return true;
+	}
+}
+
+void delayWrite(delay_t* delay, tick_t  duration){
+
+	if(delay == NULL){Error_Handler();}
+
+	delay->duration = duration;
+}

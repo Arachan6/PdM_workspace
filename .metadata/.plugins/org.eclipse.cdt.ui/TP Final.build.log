@@ -1,28 +1,14 @@
-22:47:00 **** Incremental Build of configuration Debug for project TP Final ****
+14:58:39 **** Incremental Build of configuration Debug for project TP Final ****
 make -j4 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/Core/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-../Src/main.c: In function 'main':
-../Src/main.c:135:33: warning: implicit declaration of function 'LED_blink' [-Wimplicit-function-declaration]
-  135 |                                 LED_blink(LED_secuence[index],TIMEoN,TIMEoFF);
-      |                                 ^~~~~~~~~
-../Src/main.c: At top level:
-../Src/main.c:146:6: warning: conflicting types for 'LED_blink'; have 'void(Led_TypeDef,  uint32_t,  uint32_t)' {aka 'void(Led_TypeDef,  long unsigned int,  long unsigned int)'}
-  146 | void LED_blink(Led_TypeDef led, uint32_t timeOn, uint32_t timeOff){
-      |      ^~~~~~~~~
-../Src/main.c:135:33: note: previous implicit declaration of 'LED_blink' with type 'void(Led_TypeDef,  uint32_t,  uint32_t)' {aka 'void(Led_TypeDef,  long unsigned int,  long unsigned int)'}
-  135 |                                 LED_blink(LED_secuence[index],TIMEoN,TIMEoFF);
-      |                                 ^~~~~~~~~
-arm-none-eabi-gcc -o "TP Final.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/TP Final/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="TP Final.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: TP Final.elf
- 
-arm-none-eabi-size  TP\ Final.elf 
-arm-none-eabi-objdump -h -S TP\ Final.elf  > "TP Final.list"
-   text	   data	    bss	    dec	    hex	filename
-   7856	     48	   1664	   9568	   2560	TP Final.elf
-Finished building: default.size.stdout
- 
-Finished building: TP Final.list
- 
+arm-none-eabi-gcc "../Src/hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/TP Final/Drivers/Core/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/hd44780.d" -MT"Src/hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/hd44780.o"
+../Src/hd44780.c:1:19: error: unknown type name 'uint8_t'
+    1 | void HD44780_Init(uint8_t rows)
+      |                   ^~~~~~~
+../Src/hd44780.c:1:1: note: 'uint8_t' is defined in header '<stdint.h>'; did you forget to '#include <stdint.h>'?
+  +++ |+#include <stdint.h>
+    1 | void HD44780_Init(uint8_t rows)
+make: *** [Src/subdir.mk:28: Src/hd44780.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
 
-22:47:01 Build Finished. 0 errors, 2 warnings. (took 922ms)
+14:58:39 Build Failed. 2 errors, 0 warnings. (took 628ms)
 
