@@ -23,6 +23,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include "stm32f4xx_hal.h"  		/* <- HAL include */
 #include "stm32f4xx_nucleo_144.h" 	/* <- BSP include */
 

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Move &apos;hd44780_port.c, hd44780_port.h, hd44780.c, hd44780.h&apos; to &apos;Basura&apos;" description="Move 4 resources to &apos;Basura&apos;" destination="Basura" element1="Debug/hd44780_port.c" element2="Debug/hd44780_port.h" element3="Debug/hd44780.c" element4="Debug/hd44780.h" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="4" stamp="1719786858888" updateReferences="true"/>&#x0A;&#x0A;</session>

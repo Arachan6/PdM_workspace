@@ -1,7 +1,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include <stdbool.h>
-#include "liquidcrystal_i2c.h"
+//#include "liquidcrystal_i2c.h"
+#include "hd44780.h"
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
@@ -16,7 +16,6 @@ static void MX_I2C1_Init(void);
 int main(void)
 {
 	HAL_Init();
-
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
@@ -33,35 +32,25 @@ int main(void)
 	HD44780_Init(2);
 
 	/* Clear buffer */
-	//HD44780_Clear();
+	HD44780_Clear();
 
 	/* Hide characters */
-	//HD44780_NoDisplay();
+	//HD44780_NoDisplay(); //ERA ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 	HD44780_Cursor();
 	HD44780_SetCursor(0,0);
 	HD44780_PrintStr("HEaaa STM32!!!");
-	HD44780_PrintSpecialChar(0);
+	//HD44780_PrintSpecialChar(0);
 
 	/* Show characters */
-	HD44780_Display();
+	//HD44780_Display();
 
 	/* Move position */
-	HD44780_SetCursor(0, 1);
-	HD44780_PrintStr("BYE STM32!!!");
-	HD44780_PrintSpecialChar(1);
+	//HD44780_SetCursor(0, 1);
+	//HD44780_PrintStr("BYE STM32!!!");
+	//HD44780_PrintSpecialChar(1);
 
 	/* Blink cursor */
-	HD44780_Blink();
-
-	HAL_Delay(2000);
-	HD44780_Clear();
-	HAL_Delay(2000);
-	HD44780_SetCursor(0, 2);
-	HAL_Delay(2000);
-	HD44780_SetCursor(5, 2);
-	HAL_Delay(2000);
-	HD44780_SetCursor(5, 1);
-	HD44780_PrintStr("B");
+	//HD44780_Blink();
 
 	/* Infinite loop */
 	while (1)
@@ -115,16 +104,3 @@ static void Error_Handler(void)
 	{
 	}
 }
-
-
-void _Error_Handler(char *file, int line)
-{
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  while(1)
-  {
-  }
-  /* USER CODE END Error_Handler_Debug */
-}
-
-

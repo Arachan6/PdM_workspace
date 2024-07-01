@@ -7,19 +7,16 @@
 C_SRCS += \
 ../Src/hd44780.c \
 ../Src/hd44780_port.c \
-../Src/liquidcrystal_i2c.c \
 ../Src/main.c 
 
 OBJS += \
 ./Src/hd44780.o \
 ./Src/hd44780_port.o \
-./Src/liquidcrystal_i2c.o \
 ./Src/main.o 
 
 C_DEPS += \
 ./Src/hd44780.d \
 ./Src/hd44780_port.d \
-./Src/liquidcrystal_i2c.d \
 ./Src/main.d 
 
 
@@ -30,7 +27,7 @@ Src/%.o Src/%.su Src/%.cyclo: ../Src/%.c Src/subdir.mk
 clean: clean-Src
 
 clean-Src:
-	-$(RM) ./Src/hd44780.cyclo ./Src/hd44780.d ./Src/hd44780.o ./Src/hd44780.su ./Src/hd44780_port.cyclo ./Src/hd44780_port.d ./Src/hd44780_port.o ./Src/hd44780_port.su ./Src/liquidcrystal_i2c.cyclo ./Src/liquidcrystal_i2c.d ./Src/liquidcrystal_i2c.o ./Src/liquidcrystal_i2c.su ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su
+	-$(RM) ./Src/hd44780.cyclo ./Src/hd44780.d ./Src/hd44780.o ./Src/hd44780.su ./Src/hd44780_port.cyclo ./Src/hd44780_port.d ./Src/hd44780_port.o ./Src/hd44780_port.su ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su
 
 .PHONY: clean-Src
 

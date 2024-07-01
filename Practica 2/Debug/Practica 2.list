@@ -3445,7 +3445,7 @@ int main(void)
  80016a6:	2002      	movs	r0, #2
  80016a8:	f7fe ff18 	bl	80004dc <BSP_LED_Init>
 
-	/* Declare and load durations */
+	/* Declare delays and load durations */
 	delay_t d1, d2, d3;
 	delayInit(&d1, tLED1);
  80016ac:	f107 031c 	add.w	r3, r7, #28
@@ -3465,7 +3465,6 @@ int main(void)
 
 	/* Infinite loop */
 	while (1){
-
 		if (delayRead(&d1) == true){BSP_LED_Toggle(LED1);}
  80016d2:	f107 031c 	add.w	r3, r7, #28
  80016d6:	4618      	mov	r0, r3
