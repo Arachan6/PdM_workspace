@@ -1,0 +1,17 @@
+22:42:09 **** Incremental Build of configuration Debug for project Practica 3 ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 3/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 3/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 3/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 3/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 3/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 3/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "Practica 3.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/Practica 3/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica 3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Practica 3.elf
+ 
+arm-none-eabi-size  Practica\ 3.elf 
+arm-none-eabi-objdump -h -S Practica\ 3.elf  > "Practica 3.list"
+   text	   data	    bss	    dec	    hex	filename
+   6508	     24	   1568	   8100	   1fa4	Practica 3.elf
+Finished building: default.size.stdout
+ 
+Finished building: Practica 3.list
+ 
+
+22:42:10 Build Finished. 0 errors, 0 warnings. (took 921ms)
+
