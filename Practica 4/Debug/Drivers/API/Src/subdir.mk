@@ -5,12 +5,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Drivers/API/Src/API_debounce.c \
 ../Drivers/API/Src/API_delay.c 
 
 OBJS += \
+./Drivers/API/Src/API_debounce.o \
 ./Drivers/API/Src/API_delay.o 
 
 C_DEPS += \
+./Drivers/API/Src/API_debounce.d \
 ./Drivers/API/Src/API_delay.d 
 
 
@@ -21,7 +24,7 @@ Drivers/API/Src/%.o Drivers/API/Src/%.su Drivers/API/Src/%.cyclo: ../Drivers/API
 clean: clean-Drivers-2f-API-2f-Src
 
 clean-Drivers-2f-API-2f-Src:
-	-$(RM) ./Drivers/API/Src/API_delay.cyclo ./Drivers/API/Src/API_delay.d ./Drivers/API/Src/API_delay.o ./Drivers/API/Src/API_delay.su
+	-$(RM) ./Drivers/API/Src/API_debounce.cyclo ./Drivers/API/Src/API_debounce.d ./Drivers/API/Src/API_debounce.o ./Drivers/API/Src/API_debounce.su ./Drivers/API/Src/API_delay.cyclo ./Drivers/API/Src/API_delay.d ./Drivers/API/Src/API_delay.o ./Drivers/API/Src/API_delay.su
 
 .PHONY: clean-Drivers-2f-API-2f-Src
 

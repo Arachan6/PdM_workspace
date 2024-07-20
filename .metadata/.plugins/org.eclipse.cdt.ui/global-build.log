@@ -1,55 +1,122 @@
-21:43:15 **** Incremental Build of configuration Debug for project Practica 4 ****
+15:16:36 **** Incremental Build of configuration Debug for project Practica 4 ****
 make -j4 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_debounce.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_debounce.d" -MT"Drivers/API/Src/API_debounce.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_debounce.o"
+../Drivers/API/Src/API_debounce.c: In function 'debounceFSM_update':
+../Drivers/API/Src/API_debounce.c:61:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
+   61 |                         Error_Handler();
+      |                         ^~~~~~~~~~~~~
 arm-none-eabi-gcc -o "Practica 4.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/Practica 4/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica 4.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Practica 4.elf
  
 arm-none-eabi-size  Practica\ 4.elf 
 arm-none-eabi-objdump -h -S Practica\ 4.elf  > "Practica 4.list"
    text	   data	    bss	    dec	    hex	filename
-   6464	     28	   1580	   8072	   1f88	Practica 4.elf
+   7144	     28	   1588	   8760	   2238	Practica 4.elf
 Finished building: default.size.stdout
  
 Finished building: Practica 4.list
  
-21:43:41 **** Incremental Build of configuration Debug for project Practica 4 ****
+15:40:01 **** Incremental Build of configuration Debug for project Practica 4 ****
+make -j4 all 
+arm-none-eabi-size  Practica\ 4.elf 
+   text	   data	    bss	    dec	    hex	filename
+   7144	     28	   1588	   8760	   2238	Practica 4.elf
+Finished building: default.size.stdout
+ 
+15:43:06 **** Incremental Build of configuration Debug for project Practica 4 ****
 make -j4 all 
 arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+../Src/main.c: In function 'main':
+../Src/main.c:90:17: warning: implicit declaration of function 'debounceFSM_update' [-Wimplicit-function-declaration]
+   90 |                 debounceFSM_update();
+      |                 ^~~~~~~~~~~~~~~~~~
+../Src/main.c:93:21: warning: implicit declaration of function 'readKey' [-Wimplicit-function-declaration]
+   93 |                 if (readKey()){
+      |                     ^~~~~~~
+../Src/main.c:94:35: warning: self-comparison always evaluates to false [-Wtautological-compare]
+   94 |                         freqState != freqState;
+      |                                   ^~
+../Src/main.c:94:25: warning: statement with no effect [-Wunused-value]
+   94 |                         freqState != freqState;
+      |                         ^~~~~~~~~
 arm-none-eabi-gcc -o "Practica 4.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/Practica 4/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica 4.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Practica 4.elf
  
 arm-none-eabi-size  Practica\ 4.elf 
 arm-none-eabi-objdump -h -S Practica\ 4.elf  > "Practica 4.list"
    text	   data	    bss	    dec	    hex	filename
-   6936	     28	   1588	   8552	   2168	Practica 4.elf
+   7144	     28	   1588	   8760	   2238	Practica 4.elf
 Finished building: default.size.stdout
  
 Finished building: Practica 4.list
  
-21:44:49 **** Incremental Build of configuration Debug for project Practica 4 ****
+15:44:36 **** Incremental Build of configuration Debug for project Practica 4 ****
 make -j4 all 
 arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+../Src/main.c: In function 'main':
+../Src/main.c:90:17: warning: implicit declaration of function 'debounceFSM_update' [-Wimplicit-function-declaration]
+   90 |                 debounceFSM_update();
+      |                 ^~~~~~~~~~~~~~~~~~
+../Src/main.c:93:21: warning: implicit declaration of function 'readKey' [-Wimplicit-function-declaration]
+   93 |                 if (readKey()){
+      |                     ^~~~~~~
+../Src/main.c:94:35: warning: self-comparison always evaluates to false [-Wtautological-compare]
+   94 |                         freqState != freqState;
+      |                                   ^~
+../Src/main.c:94:25: warning: statement with no effect [-Wunused-value]
+   94 |                         freqState != freqState;
+      |                         ^~~~~~~~~
 arm-none-eabi-gcc -o "Practica 4.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/Practica 4/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica 4.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Practica 4.elf
  
 arm-none-eabi-size  Practica\ 4.elf 
 arm-none-eabi-objdump -h -S Practica\ 4.elf  > "Practica 4.list"
    text	   data	    bss	    dec	    hex	filename
-   6940	     28	   1588	   8556	   216c	Practica 4.elf
+   7144	     28	   1588	   8760	   2238	Practica 4.elf
 Finished building: default.size.stdout
  
 Finished building: Practica 4.list
  
-21:45:34 **** Incremental Build of configuration Debug for project Practica 4 ****
+15:45:40 **** Incremental Build of configuration Debug for project Practica 4 ****
 make -j4 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_debounce.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_debounce.d" -MT"Drivers/API/Src/API_debounce.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_debounce.o"
+../Drivers/API/Src/API_debounce.c: In function 'debounceFSM_update':
+../Drivers/API/Src/API_debounce.c:61:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
+   61 |                         Error_Handler();
+      |                         ^~~~~~~~~~~~~
 arm-none-eabi-gcc -o "Practica 4.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/Practica 4/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica 4.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Practica 4.elf
  
 arm-none-eabi-size  Practica\ 4.elf 
 arm-none-eabi-objdump -h -S Practica\ 4.elf  > "Practica 4.list"
    text	   data	    bss	    dec	    hex	filename
-   6936	     28	   1588	   8552	   2168	Practica 4.elf
+   7144	     28	   1588	   8760	   2238	Practica 4.elf
+Finished building: default.size.stdout
+ 
+Finished building: Practica 4.list
+ 
+15:48:12 **** Incremental Build of configuration Debug for project Practica 4 ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_debounce.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 4/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_debounce.d" -MT"Drivers/API/Src/API_debounce.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_debounce.o"
+../Drivers/API/Src/API_debounce.c: In function 'debounceFSM_update':
+../Drivers/API/Src/API_debounce.c:61:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
+   61 |                         Error_Handler();
+      |                         ^~~~~~~~~~~~~
+../Src/main.c: In function 'main':
+../Src/main.c:90:17: warning: implicit declaration of function 'debounceFSM_update' [-Wimplicit-function-declaration]
+   90 |                 debounceFSM_update();
+      |                 ^~~~~~~~~~~~~~~~~~
+../Src/main.c:93:21: warning: implicit declaration of function 'readKey' [-Wimplicit-function-declaration]
+   93 |                 if (readKey()){
+      |                     ^~~~~~~
+arm-none-eabi-gcc -o "Practica 4.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/Practica 4/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica 4.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Practica 4.elf
+ 
+arm-none-eabi-size  Practica\ 4.elf 
+arm-none-eabi-objdump -h -S Practica\ 4.elf  > "Practica 4.list"
+   text	   data	    bss	    dec	    hex	filename
+   7176	     28	   1588	   8792	   2258	Practica 4.elf
 Finished building: default.size.stdout
  
 Finished building: Practica 4.list

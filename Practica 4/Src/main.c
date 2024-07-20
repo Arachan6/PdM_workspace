@@ -37,13 +37,12 @@
 
 /* Private define ------------------------------------------------------------*/
 
-#define VALID_BUTTON_TIME 40
+
 
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-
-delay_t d1;
+bool_t freqState = true;
 
 /* Private function prototypes -----------------------------------------------*/
 
@@ -83,14 +82,28 @@ int main(void)
 	BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
 
 	/* Declare delays and load durations */
-
-	delayInit(&d1, VALID_BUTTON_TIME);
-
-
+	delay_t freqLed;
 
 	/* Infinite loop */
 	while (1){
+		//Actualizar MEF
 		debounceFSM_update();
+
+		//Si se pulsó el boton cambio la frecuencia de encedido y apagado del LED2
+		if (readKey()){
+			freqState = !freqState;
+
+			if (freqState){
+				delayWrite(&freqLed, 500);
+			} else {
+				delayWrite(&freqLed, 100);
+			}
+		}
+
+		//Toggle led cuando se cumple la duracion
+		if (delayRead(&freqLed) == true){
+			BSP_LED_Toggle(LED2);
+		}
 	}
 }
 
