@@ -3809,3 +3809,9 @@ org.eclipse.core.runtime.CoreException: attempt to set description for a project
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1432)
 !SUBENTRY 1 org.eclipse.cdt.core 4 -1 2024-07-20 08:58:31.231
 !MESSAGE attempt to set description for a project which does not exist or not open
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-07-20 17:22:15.549
+!MESSAGE Indexed 'Practica 4.2' (103 sources, 253 headers) in 8.22 sec: 32,693 declarations; 98,081 references; 9 unresolved inclusions; 71 syntax errors; 1,625 unresolved names (1.2%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-07-20 17:23:38.152
+!MESSAGE Indexed 'Practica 4.1' (0 sources, 0 headers) in 0 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)

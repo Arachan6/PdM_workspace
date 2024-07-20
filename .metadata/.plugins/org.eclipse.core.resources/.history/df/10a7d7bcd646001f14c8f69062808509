@@ -1,0 +1,22 @@
+/*
+ * API_debounce.c
+ *
+ *  Created on: Jul 11, 2024
+ *      Author: felipe
+ */
+
+#include "API_debounce.h"
+#include "API_delay.h"
+
+typedef enum{
+	BUTTON_UP,
+	BUTTON_FALLING,
+	BUTTON_DOWN,
+	BUTTON_RAISING,
+} debounceState_t;
+
+static bool_t buttonPress;
+static debounceState_t buttonState;
+static delay_t d1;
+
+

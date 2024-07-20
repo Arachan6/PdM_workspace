@@ -16,3 +16,7 @@ Implement a software module to work with non-blocking delays.
 ### Practice 3
 
 Implement a software module to work with non-blocking delays based on the functions created in practice 2.
+
+### Practice 4
+
+Implement a Finite State Machine (FSM) to work with software anti-bounce.
