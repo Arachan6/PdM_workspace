@@ -1,0 +1,50 @@
+/*
+ * API_uart.c
+ *
+ *  Created on: Jul 22, 2024
+ *      Author: felipe
+ */
+
+
+#include "API_delay.h"
+#include "API_uart.h"
+#include "main.h"
+
+UART_HandleTypeDef UartHandle;
+
+bool_t uartInit(void){
+	 bool_t rtrn=true;
+	 char baudRateValue[5]={};
+	 char wordLengthValue[5]={};
+	 char StopBitsValue[5]={};
+	 char parityValue[5]={};
+
+	UartHandle.Instance        = USARTx;
+	UartHandle.Init.BaudRate   = 9600;
+	UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
+	UartHandle.Init.StopBits   = UART_STOPBITS_1;
+	UartHandle.Init.Parity     = UART_PARITY_ODD;
+	UartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+	UartHandle.Init.Mode       = UART_MODE_TX_RX;
+	UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
+	if (HAL_UART_Init(&UartHandle) != HAL_OK){rtrn=false;}
+
+	sprintf((char*) baudRateValue, "%d",(int) UartHandle.Init.BaudRate);
+	sprintf((char*) wordLengthValue, "%d",(int) UartHandle.Init.WordLength);
+	sprintf((char*) StopBitsValue, "%d",(int) UartHandle.Init.StopBits);
+	sprintf((char*) parityValue, "%d",(int) UartHandle.Init.Parity);
+
+	uartSendString((uint8_t*)"Uart Iniciada\n\r");
+	uartSendString((uint8_t*)"-----Parametros UART-----\n\r");
+	uartSendString((uint8_t*)"\n\rBaud rate: ");
+	uartSendString((uint8_t*)baudRateValue);
+	uartSendString((uint8_t*)"\n\rWord Length: ");
+	uartSendString((uint8_t*)wordLengthValue);
+	uartSendString((uint8_t*)"\n\rStop Bits: ");
+	uartSendString((uint8_t*)StopBitsValue);
+	uartSendString((uint8_t*)"\n\rParity: ");
+	uartSendString((uint8_t*)parityValue);
+	uartSendString((uint8_t*)"\n\r");
+
+	return rtrn;
+}

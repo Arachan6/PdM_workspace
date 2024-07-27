@@ -1,5 +1,7 @@
 # Microcontrollers Programming
 
+Autor: Felipe Saravia
+
 ## Description
 Repository intended for uploading all the practices of the Microcontroller Programming course as well as its final project.
 
@@ -20,3 +22,7 @@ Implement a software module to work with non-blocking delays based on the functi
 ### Practice 4
 
 Implement a Finite State Machine (FSM) to work with software anti-bounce.
+
+### Practice 5
+
+Implement a software module with a HAL wrapper to work with the UART.

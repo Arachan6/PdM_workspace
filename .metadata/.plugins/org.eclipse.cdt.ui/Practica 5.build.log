@@ -1,0 +1,36 @@
+16:10:32 **** Incremental Build of configuration Debug for project Practica 5 ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 5/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_uart.d" -MT"Drivers/API/Src/API_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_uart.o"
+../Drivers/API/Src/API_uart.c: In function 'uartSendString':
+../Drivers/API/Src/API_uart.c:70:59: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+   70 |         HAL_UART_Transmit(&UartHandle,(uint8_t*) pstring, strlen(pstring), HAL_MAX_TIMEOUT);
+      |                                                           ^~~~~~
+../Drivers/API/Src/API_uart.c:11:1: note: include '<string.h>' or provide a declaration of 'strlen'
+   10 | #include "main.h"
+  +++ |+#include <string.h>
+   11 | 
+../Drivers/API/Src/API_uart.c:70:59: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+   70 |         HAL_UART_Transmit(&UartHandle,(uint8_t*) pstring, strlen(pstring), HAL_MAX_TIMEOUT);
+      |                                                           ^~~~~~
+../Drivers/API/Src/API_uart.c:70:59: note: include '<string.h>' or provide a declaration of 'strlen'
+../Drivers/API/Src/API_uart.c:70:66: warning: pointer targets in passing argument 1 of 'strlen' differ in signedness [-Wpointer-sign]
+   70 |         HAL_UART_Transmit(&UartHandle,(uint8_t*) pstring, strlen(pstring), HAL_MAX_TIMEOUT);
+      |                                                                  ^~~~~~~
+      |                                                                  |
+      |                                                                  uint8_t * {aka unsigned char *}
+../Drivers/API/Src/API_uart.c:70:66: note: expected 'const char *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "Practica 5.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/Practica 5/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica 5.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Practica 5.elf
+ 
+arm-none-eabi-size  Practica\ 5.elf 
+arm-none-eabi-objdump -h -S Practica\ 5.elf  > "Practica 5.list"
+   text	   data	    bss	    dec	    hex	filename
+  12616	    108	   1988	  14712	   3978	Practica 5.elf
+Finished building: default.size.stdout
+ 
+Finished building: Practica 5.list
+ 
+
+16:10:33 Build Finished. 0 errors, 3 warnings. (took 1s.23ms)
+

@@ -1,0 +1,8 @@
+/*
+ * API_uart.c
+ *
+ *  Created on: Jul 22, 2024
+ *      Author: felipe
+ */
+
+#include "API_uart.h"

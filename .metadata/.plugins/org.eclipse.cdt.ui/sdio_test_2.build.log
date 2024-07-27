@@ -1,0 +1,10 @@
+18:11:46 **** Incremental Build of configuration Debug for project sdio_test_2 ****
+make -j4 all 
+arm-none-eabi-size  sdio_test_2.elf 
+   text	   data	    bss	    dec	    hex	filename
+  36052	     92	   4316	  40460	   9e0c	sdio_test_2.elf
+Finished building: default.size.stdout
+ 
+
+18:11:47 Build Finished. 0 errors, 0 warnings. (took 627ms)
+

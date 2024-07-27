@@ -3431,10 +3431,10 @@ void HD44780_Init(uint8_t rows){
 void HD44780_Home(){
  8001574:	b580      	push	{r7, lr}
  8001576:	af00      	add	r7, sp, #0
-  SendCommand(LCD_RETURNHOME);
+	SendCommand(LCD_RETURNHOME);
  8001578:	2002      	movs	r0, #2
  800157a:	f000 f8a2 	bl	80016c2 <SendCommand>
-  DelayUS(2000);
+	DelayUS(2000);
  800157e:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
  8001582:	f000 f901 	bl	8001788 <DelayUS>
 }
@@ -3448,7 +3448,7 @@ void HD44780_PrintStr(const char c[]){
  800158c:	b082      	sub	sp, #8
  800158e:	af00      	add	r7, sp, #0
  8001590:	6078      	str	r0, [r7, #4]
-  while(*c) SendData(*c++);
+	while(*c) SendData(*c++);
  8001592:	e006      	b.n	80015a2 <HD44780_PrintStr+0x18>
  8001594:	687b      	ldr	r3, [r7, #4]
  8001596:	1c5a      	adds	r2, r3, #1
@@ -3472,14 +3472,14 @@ void HD44780_PrintStr(const char c[]){
 void HD44780_Display(){
  80015b4:	b580      	push	{r7, lr}
  80015b6:	af00      	add	r7, sp, #0
-  dpControl |= LCD_DISPLAYON;
+	dpControl |= LCD_DISPLAYON;
  80015b8:	4b08      	ldr	r3, [pc, #32]	@ (80015dc <HD44780_Display+0x28>)
  80015ba:	781b      	ldrb	r3, [r3, #0]
  80015bc:	f043 0304 	orr.w	r3, r3, #4
  80015c0:	b2da      	uxtb	r2, r3
  80015c2:	4b06      	ldr	r3, [pc, #24]	@ (80015dc <HD44780_Display+0x28>)
  80015c4:	701a      	strb	r2, [r3, #0]
-  SendCommand(LCD_DISPLAYCONTROL | dpControl);
+	SendCommand(LCD_DISPLAYCONTROL | dpControl);
  80015c6:	4b05      	ldr	r3, [pc, #20]	@ (80015dc <HD44780_Display+0x28>)
  80015c8:	781b      	ldrb	r3, [r3, #0]
  80015ca:	f043 0308 	orr.w	r3, r3, #8
@@ -3494,21 +3494,21 @@ void HD44780_Display(){
 
 080015e0 <HD44780_Cursor>:
 void HD44780_NoDisplay(){
-  dpControl &= ~LCD_DISPLAYON;
-  SendCommand(LCD_DISPLAYCONTROL | dpControl);
+	dpControl &= ~LCD_DISPLAYON;
+	SendCommand(LCD_DISPLAYCONTROL | dpControl);
 }
 
 void HD44780_Cursor(){
  80015e0:	b580      	push	{r7, lr}
  80015e2:	af00      	add	r7, sp, #0
-  dpControl |= LCD_CURSORON;
+	dpControl |= LCD_CURSORON;
  80015e4:	4b08      	ldr	r3, [pc, #32]	@ (8001608 <HD44780_Cursor+0x28>)
  80015e6:	781b      	ldrb	r3, [r3, #0]
  80015e8:	f043 0302 	orr.w	r3, r3, #2
  80015ec:	b2da      	uxtb	r2, r3
  80015ee:	4b06      	ldr	r3, [pc, #24]	@ (8001608 <HD44780_Cursor+0x28>)
  80015f0:	701a      	strb	r2, [r3, #0]
-  SendCommand(LCD_DISPLAYCONTROL | dpControl);
+	SendCommand(LCD_DISPLAYCONTROL | dpControl);
  80015f2:	4b05      	ldr	r3, [pc, #20]	@ (8001608 <HD44780_Cursor+0x28>)
  80015f4:	781b      	ldrb	r3, [r3, #0]
  80015f6:	f043 0308 	orr.w	r3, r3, #8
@@ -3523,8 +3523,8 @@ void HD44780_Cursor(){
 
 0800160c <HD44780_SetCursor>:
 void HD44780_NoCursor(){
-  dpControl &= ~LCD_CURSORON;
-  SendCommand(LCD_DISPLAYCONTROL | dpControl);
+	dpControl &= ~LCD_CURSORON;
+	SendCommand(LCD_DISPLAYCONTROL | dpControl);
 }
 
 void HD44780_SetCursor(uint8_t col, uint8_t row){
@@ -3536,25 +3536,24 @@ void HD44780_SetCursor(uint8_t col, uint8_t row){
  8001616:	71fb      	strb	r3, [r7, #7]
  8001618:	4613      	mov	r3, r2
  800161a:	71bb      	strb	r3, [r7, #6]
-  int row_offsets[] = { 0x00, 0x40, 0x14, 0x54 };
+	int row_offsets[] = { 0x00, 0x40, 0x14, 0x54 };
  800161c:	4b12      	ldr	r3, [pc, #72]	@ (8001668 <HD44780_SetCursor+0x5c>)
  800161e:	f107 0408 	add.w	r4, r7, #8
  8001622:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
  8001624:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
-  if (row >= dpRows)
+	if (row >= dpRows){
  8001628:	4b10      	ldr	r3, [pc, #64]	@ (800166c <HD44780_SetCursor+0x60>)
  800162a:	781b      	ldrb	r3, [r3, #0]
  800162c:	79ba      	ldrb	r2, [r7, #6]
  800162e:	429a      	cmp	r2, r3
  8001630:	d303      	bcc.n	800163a <HD44780_SetCursor+0x2e>
-  {
-    row = dpRows-1;
+		row = dpRows-1;
  8001632:	4b0e      	ldr	r3, [pc, #56]	@ (800166c <HD44780_SetCursor+0x60>)
  8001634:	781b      	ldrb	r3, [r3, #0]
  8001636:	3b01      	subs	r3, #1
  8001638:	71bb      	strb	r3, [r7, #6]
-  }
-  SendCommand(LCD_SETDDRAMADDR | (col + row_offsets[row]));
+	}
+	SendCommand(LCD_SETDDRAMADDR | (col + row_offsets[row]));
  800163a:	79bb      	ldrb	r3, [r7, #6]
  800163c:	009b      	lsls	r3, r3, #2
  800163e:	3318      	adds	r3, #24
@@ -3581,17 +3580,17 @@ void HD44780_SetCursor(uint8_t col, uint8_t row){
 
 08001670 <HD44780_Clear>:
 void HD44780_NoBlink(){
-  dpControl &= ~LCD_BLINKON;
-  SendCommand(LCD_DISPLAYCONTROL | dpControl);
+	dpControl &= ~LCD_BLINKON;
+	SendCommand(LCD_DISPLAYCONTROL | dpControl);
 }
 
 void HD44780_Clear(){
  8001670:	b580      	push	{r7, lr}
  8001672:	af00      	add	r7, sp, #0
-  SendCommand(LCD_CLEARDISPLAY);
+	SendCommand(LCD_CLEARDISPLAY);
  8001674:	2001      	movs	r0, #1
  8001676:	f000 f824 	bl	80016c2 <SendCommand>
-  DelayUS(2000);
+	DelayUS(2000);
  800167a:	f44f 60fa 	mov.w	r0, #2000	@ 0x7d0
  800167e:	f000 f883 	bl	8001788 <DelayUS>
 }
