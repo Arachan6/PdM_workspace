@@ -1,0 +1,34 @@
+/*
+ * API_gps.h
+ *
+ *  Created on: Jul 28, 2024
+ *      Author: felipe
+ */
+
+#ifndef API_INC_API_GPS_H_
+#define API_INC_API_GPS_H_
+
+#define MAX_FIELDS 20
+#define MAX_FIELDS_LENGTH 50
+
+// Struct to hold NMEA sentence data
+typedef struct {
+	char sentenceType[7];
+	char mode;
+	int fixType;
+	float pdop, hdop, vdop;
+	int numOfMessages, messageNumber, satellitesInView;
+	char time[11];
+	char status;
+	double latitude, longitude, speed, trackAngle;
+	char date[7];
+	double trueTrack, magneticTrack, groundSpeedKnots, groundSpeedKph;
+	int fixQuality, numSatellites;
+	double altitude;
+} NMEAData;
+
+void String_Split(const char* str, char delimiter, char fields[MAX_FIELDS][MAX_FIELDS_LENGTH], int* fieldCount);
+bool_t Parse_NMEA_Sentence(const char* nmea);
+const NMEAData* Get_NMEA_Data();
+
+#endif /* API_INC_API_GPS_H_ */

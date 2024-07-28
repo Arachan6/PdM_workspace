@@ -1,0 +1,93 @@
+/*
+ * API_gps.c
+ *
+ *  Created on: Jul 28, 2024
+ *      Author: felipe
+ */
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "API_uart.h"
+#include "API_gps.h"
+
+NMEAData nmeaData;
+
+// Function to split a string by a delimiter
+void String_Split(const char* str, char delimiter, char fields[MAX_FIELDS][MAX_FIELDS_LENGTH], int* fieldCount) {
+    *fieldCount = 0;
+    int length = strlen(str);
+    int fieldIndex = 0;
+    int charIndex = 0;
+
+    for (int i = 0; i < length; i++) {
+        if (str[i] == delimiter || str[i] == '\n') {
+            fields[fieldIndex][charIndex] = '\0'; // Null-terminate current token
+            fieldIndex++;
+            charIndex = 0;
+            if (fieldIndex >= MAX_FIELDS) break;
+        } else {
+            fields[fieldIndex][charIndex++] = str[i];
+            if (charIndex >= MAX_FIELDS_LENGTH - 1) {
+                fields[fieldIndex][charIndex] = '\0'; // Null-terminate and prevent overflow
+                charIndex = 0;
+            }
+        }
+    }
+    *fieldCount = fieldIndex + 1; // Account for the last field
+}
+
+
+bool_t Parse_NMEA_Sentence(const char* nmea) {
+    char fields[MAX_FIELDS][MAX_FIELDS_LENGTH];
+    int fieldCount = 0;
+    bool_t rtrn = true;
+    String_Split(nmea, ',', fields, &fieldCount);
+
+    if (fieldCount < 1) {rtrn = false;} // Not enough fields
+
+    strncpy(nmeaData.sentenceType, fields[0], sizeof(nmeaData.sentenceType) - 1);
+
+    if (strcmp(nmeaData.sentenceType, "$GPGSA") == 0) {
+        nmeaData.mode = fields[1][0];
+        nmeaData.fixType = atoi(fields[2]);
+        nmeaData.pdop = atof(fields[15]);
+        nmeaData.hdop = atof(fields[16]);
+        nmeaData.vdop = atof(fields[17]);
+
+    } else if (strcmp(nmeaData.sentenceType, "$GPGSV") == 0) {
+        nmeaData.numOfMessages = atoi(fields[1]);
+        nmeaData.messageNumber = atoi(fields[2]);
+        nmeaData.satellitesInView = atoi(fields[3]);
+
+    } else if (strcmp(nmeaData.sentenceType, "$GPRMC") == 0) {
+        strncpy(nmeaData.time, fields[1], sizeof(nmeaData.time) - 1);
+        nmeaData.status = fields[2][0];
+        nmeaData.latitude = atof(fields[3]);
+        nmeaData.longitude = atof(fields[5]);
+        nmeaData.speed = atof(fields[7]);
+        nmeaData.trackAngle = atof(fields[8]);
+        strncpy(nmeaData.date, fields[9], sizeof(nmeaData.date) - 1);
+
+    } else if (strcmp(nmeaData.sentenceType, "$GPVTG") == 0) {
+        nmeaData.trueTrack = atof(fields[1]);
+        nmeaData.magneticTrack = atof(fields[3]);
+        nmeaData.groundSpeedKnots = atof(fields[5]);
+        nmeaData.groundSpeedKph = atof(fields[7]);
+
+    } else if (strcmp(nmeaData.sentenceType, "$GPGGA") == 0) {
+        strncpy(nmeaData.time, fields[1], sizeof(nmeaData.time) - 1);
+        nmeaData.latitude = atof(fields[2]);
+        nmeaData.longitude = atof(fields[4]);
+        nmeaData.fixQuality = atoi(fields[6]);
+        nmeaData.numSatellites = atoi(fields[7]);
+        nmeaData.hdop = atof(fields[8]);
+        nmeaData.altitude = atof(fields[9]);
+    }
+}
+
+const NMEAData* Get_NMEA_Data() {
+    return &nmeaData;
+}
+

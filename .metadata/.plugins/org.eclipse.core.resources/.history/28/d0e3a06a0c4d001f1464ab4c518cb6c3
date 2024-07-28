@@ -1,0 +1,88 @@
+/*
+ * API_gps.c
+ *
+ *  Created on: Jul 28, 2024
+ *      Author: felipe
+ */
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "API_uart.h"
+#include "API_gps.h"
+
+// Function to split a string by a delimiter
+void String_Split(const char* str, char delimiter, char fields[MAX_FIELDS][MAX_FIELDS_LENGTH], int* fieldCount) {
+    *fieldCount = 0;
+    int length = strlen(str);
+    int fieldIndex = 0;
+    int charIndex = 0;
+
+    for (int i = 0; i < length; i++) {
+        if (str[i] == delimiter || str[i] == '\n') {
+            fields[fieldIndex][charIndex] = '\0'; // Null-terminate current token
+            fieldIndex++;
+            charIndex = 0;
+            if (fieldIndex >= MAX_FIELDS) break;
+        } else {
+            fields[fieldIndex][charIndex++] = str[i];
+            if (charIndex >= MAX_FIELDS_LENGTH - 1) {
+                fields[fieldIndex][charIndex] = '\0'; // Null-terminate and prevent overflow
+                charIndex = 0;
+            }
+        }
+    }
+    *fieldCount = fieldIndex + 1; // Account for the last field
+}
+
+
+void Parse_NMEA_Sentence(const char* nmea) {
+    char fields[MAX_FIELDS][MAX_FIELDS_LENGTH];
+    int fieldCount = 0;
+    String_Split(nmea, ',', fields, &fieldCount);
+
+    if (fieldCount < 18) return; // Not enough fields
+
+    char* sentenceType = fields[0];
+
+    if (strcmp(sentenceType, "$GPGSA") == 0) {
+        //USART2_Send_String((uint8_t*)"\n\rGPGSA Sentence");
+        char mode = fields[1][0];
+        int fixType = atoi(fields[2]);
+        float pdop = atof(fields[15]);
+        float hdop = atof(fields[16]);
+        float vdop = atof(fields[17]);
+
+    } else if (strcmp(sentenceType, "$GPGSV") == 0) {
+        int numOfMessages = atoi(fields[1]);
+        int messageNumber = atoi(fields[2]);
+        int satellitesInView = atoi(fields[3]);
+
+    } else if (strcmp(sentenceType, "$GPRMC") == 0) {
+        const char* time = fields[1];
+        char status = fields[2][0];
+        double latitude = atof(fields[3]);
+        double longitude = atof(fields[5]);
+        double speed = atof(fields[7]);
+        double trackAngle = atof(fields[8]);
+        const char* date = fields[9];
+
+    } else if (strcmp(sentenceType, "$GPVTG") == 0) {
+        double trueTrack = atof(fields[1]);
+        double magneticTrack = atof(fields[3]);
+        double groundSpeedKnots = atof(fields[5]);
+        double groundSpeedKph = atof(fields[7]);
+    } else if (strcmp(sentenceType, "$GPGGA") == 0) {
+        const char* time = fields[1];
+        double latitude = atof(fields[2]);
+        double longitude = atof(fields[4]);
+        int fixQuality = atoi(fields[6]);
+        int numSatellites = atoi(fields[7]);
+        double hdop = atof(fields[8]);
+        double altitude = atof(fields[9]);
+    } else {
+        //USART2_Send_String((uint8_t*)"\n\rUnknown Sentence");
+    }
+}
+

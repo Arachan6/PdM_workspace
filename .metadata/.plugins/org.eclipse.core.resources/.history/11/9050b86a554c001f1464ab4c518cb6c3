@@ -1,0 +1,102 @@
+/*
+ * API_uart.c
+ *
+ *  Created on: Jul 22, 2024
+ *      Author: felipe
+ */
+
+#include "API_delay.h"
+#include "API_uart.h"
+#include "main.h"
+
+UART_HandleTypeDef UartHandle;
+
+static void UART5_GPIO_Init(void){
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    /* Enable GPIO Clocks */
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+
+    /* Enable UART5 Clock */
+    __HAL_RCC_UART5_CLK_ENABLE();
+
+    /* Configure PC12 for UART5 TX */
+    GPIO_InitStruct.Pin = GPIO_PIN_12;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF8_UART5;
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+    /* Configure PD2 for UART5 RX */
+    GPIO_InitStruct.Pin = GPIO_PIN_2;
+    GPIO_InitStruct.Alternate = GPIO_AF8_UART5;
+    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+}
+
+
+static void MX_GPIO_Init(void){
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    /* Enable GPIO Clocks */
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+
+    /* Enable USART2 Clock */
+    __HAL_RCC_USART2_CLK_ENABLE();
+
+    /* Configure PD5 for USART2 TX */
+    GPIO_InitStruct.Pin = GPIO_PIN_5;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
+    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+    /* Configure PD6 for USART2 RX */
+    GPIO_InitStruct.Pin = GPIO_PIN_6;
+    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+}
+
+
+bool_t uartInit(void){
+	bool_t rtrn=true;
+	char baudRate[10]={};
+	char wordLength[10]={};
+	char stopBits[10]={};
+	char parityBits[10]={};
+
+	UartHandle.Instance        = USARTx;
+	UartHandle.Init.BaudRate   = 9600;
+	UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
+	UartHandle.Init.StopBits   = UART_STOPBITS_1;
+	UartHandle.Init.Parity     = UART_PARITY_NONE;
+	UartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+	UartHandle.Init.Mode       = UART_MODE_TX_RX;
+	UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
+	if (HAL_UART_Init(&UartHandle) != HAL_OK){rtrn=false;}
+
+	sprintf(baudRate, "%d",(int)UartHandle.Init.BaudRate);
+	sprintf(wordLength, "%d",(int)UartHandle.Init.WordLength);
+	sprintf(stopBits, "%d",(int)UartHandle.Init.StopBits);
+	sprintf(parityBits, "%d",(int)UartHandle.Init.Parity);
+
+	uartSendString((uint8_t*)"Uart Inicializada correctamente\n\r");
+	uartSendString((uint8_t*)"-----Parametros Configurados-----\n\r");
+	uartSendString((uint8_t*)"\n\rBaud rate: ");
+	uartSendString((uint8_t*)baudRate);
+	uartSendString((uint8_t*)"\n\rWord Length: ");
+	uartSendString((uint8_t*)wordLength);
+	uartSendString((uint8_t*)"\n\rStop Bits: ");
+	uartSendString((uint8_t*)stopBits);
+	uartSendString((uint8_t*)"\n\rParity: ");
+	uartSendString((uint8_t*)parityBits);
+	uartSendString((uint8_t*)"\n\r");
+
+	return rtrn;
+}
+
+void uartSendString(uint8_t * pstring){
+	HAL_UART_Transmit(&UartHandle,(uint8_t*) pstring,strlen((const char*) pstring), 1000);
+}
+

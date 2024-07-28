@@ -1,0 +1,55 @@
+/*
+ * API_gps.c
+ *
+ *  Created on: Jul 28, 2024
+ *      Author: felipe
+ */
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX_FIELDS 20
+#define MAX_FIELDS_LENGTH 50
+
+// Function to split a string by a delimiter
+void splitStringManual(const char* str, char delimiter, char fields[MAX_FIELDS][MAX_FIELDS_LENGTH], int* fieldCount) {
+    *fieldCount = 0;
+    int length = strlen(str);
+    int fieldIndex = 0;
+    int charIndex = 0;
+
+    for (int i = 0; i < length; i++) {
+        if (str[i] == delimiter || str[i] == '\n') {
+            fields[fieldIndex][charIndex] = '\0'; // Null-terminate current token
+            fieldIndex++;
+            charIndex = 0;
+            if (fieldIndex >= MAX_FIELDS) break;
+        } else {
+            fields[fieldIndex][charIndex++] = str[i];
+            if (charIndex >= MAX_FIELD_LENGTH - 1) {
+                fields[fieldIndex][charIndex] = '\0'; // Null-terminate and prevent overflow
+                charIndex = 0;
+            }
+        }
+    }
+    *tokenCount = tokenIndex + 1; // Account for the last token
+}
+
+void ParseGPGSA(const char* nmea) {
+    char tokens[MAX_TOKENS][MAX_TOKEN_LENGTH];
+    int tokenCount = 0;
+    splitStringManual(nmea, ',', tokens, &tokenCount);
+
+    if (tokenCount < 18) return; // Not enough tokens
+
+    char mode = tokens[1][0];
+    int fixType = atoi(tokens[2]);
+    float pdop = atof(tokens[15]);
+    float hdop = atof(tokens[16]);
+    float vdop = atof(tokens[17]);
+
+    //printf("GPGSA: Mode=%c, FixType=%d, PDOP=%.1f, HDOP=%.1f, VDOP=%.1f\n",
+    //      mode, fixType, pdop, hdop, vdop);
+}

@@ -1,0 +1,54 @@
+/*
+ * API_uart.c
+ *
+ *  Created on: Jul 22, 2024
+ *      Author: felipe
+ */
+
+#include "API_delay.h"
+#include "API_uart2.h"
+#include "main.h"
+
+UART_HandleTypeDef UartHandle2;
+
+bool_t uartInit2(void){
+	bool_t rtrn=true;
+	char baudRate[10]={};
+	char wordLength[10]={};
+	char stopBits[10]={};
+	char parityBits[10]={};
+
+	UartHandle2.Instance        = USARTx2;
+	UartHandle2.Init.BaudRate   = 9600;
+	UartHandle2.Init.WordLength = UART_WORDLENGTH_8B;
+	UartHandle2.Init.StopBits   = UART_STOPBITS_1;
+	UartHandle2.Init.Parity     = UART_PARITY_NONE;
+	UartHandle2.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+	UartHandle2.Init.Mode       = UART_MODE_TX_RX;
+	UartHandle2.Init.OverSampling = UART_OVERSAMPLING_16;
+	if (HAL_UART_Init(&UartHandle2) != HAL_OK){rtrn=false;}
+
+	sprintf(baudRate, "%d",(int)UartHandle2.Init.BaudRate);
+	sprintf(wordLength, "%d",(int)UartHandle2.Init.WordLength);
+	sprintf(stopBits, "%d",(int)UartHandle2.Init.StopBits);
+	sprintf(parityBits, "%d",(int)UartHandle2.Init.Parity);
+
+	uartSendString2((uint8_t*)"Uart Inicasfasfasfafsente\n\r");
+	uartSendString2((uint8_t*)"---g5heh5e5he5hnfigurados-----\n\r");
+	uartSendString2((uint8_t*)"\n\rBsdgsggrsgte: ");
+	uartSendString2((uint8_t*)baudRate);
+	uartSendString2((uint8_t*)"\n\rWs44gs Length: ");
+	uartSendString2((uint8_t*)wordLength);
+	uartSendString2((uint8_t*)"\n\rStoptujjuujtujts: ");
+	uartSendString2((uint8_t*)stopBits);
+	uartSendString2((uint8_t*)"\n\rPa5gh5ege5gy: ");
+	uartSendString2((uint8_t*)parityBits);
+	uartSendString2((uint8_t*)"\n\r");
+
+	return rtrn;
+}
+
+void uartSendString2(uint8_t * pstring){
+	HAL_UART_Transmit(&UartHandle2,(uint8_t*) pstring,strlen((const char*) pstring), 1000);
+}
+

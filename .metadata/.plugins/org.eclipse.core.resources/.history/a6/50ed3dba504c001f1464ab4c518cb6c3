@@ -1,0 +1,107 @@
+#include "main.h"
+#define NMEA_BUFFER_SIZE 256
+
+uint8_t rx_char;
+uint8_t nmea_buffer[NMEA_BUFFER_SIZE];
+uint8_t nmea_index = 0;
+uint8_t sentence_started = 0;
+
+void UART5_IRQHandler(void) {
+    HAL_UART_IRQHandler(&huart5);
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == UART5) {
+        if (rx_char == '$') {
+            // Nuevo comienzo de una sentencia NMEA
+            nmea_index = 0;
+            sentence_started = 1;
+        }
+
+        if (sentence_started) {
+            nmea_buffer[nmea_index++] = rx_char;
+
+            // Asegurarse de no desbordar el buffer
+            if (nmea_index >= NMEA_BUFFER_SIZE) {
+                nmea_index = NMEA_BUFFER_SIZE - 1;
+            }
+
+            // Comprobar el final de la sentencia NMEA
+            if (rx_char == '\n' || rx_char == '\r') {
+                nmea_buffer[nmea_index] = '\0'; // Terminar la cadena
+                sentence_started = 0;
+
+                // Enviar la sentencia NMEA completa a través de USART2
+                HAL_UART_Transmit(&huart2, nmea_buffer, nmea_index, HAL_MAX_DELAY);
+            }
+        }
+
+        // Continuar recibiendo el siguiente carácter
+        HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char, 1);
+    }
+}
+UART_HandleTypeDef huart5;
+UART_HandleTypeDef huart2;
+
+void UART_Init(void) {
+    // Habilitar relojes
+    __HAL_RCC_UART5_CLK_ENABLE();
+    __HAL_RCC_USART2_CLK_ENABLE();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    // Configurar PC12 como UART5_TX
+    GPIO_InitStruct.Pin = GPIO_PIN_12;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF8_UART5;
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+    // Configurar PD2 como UART5_RX
+    GPIO_InitStruct.Pin = GPIO_PIN_2;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Alternate = GPIO_AF8_UART5;
+    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+    // Configurar PD5 como USART2_TX
+    GPIO_InitStruct.Pin = GPIO_PIN_5;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
+    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+    // Configurar PD6 como USART2_RX
+    GPIO_InitStruct.Pin = GPIO_PIN_6;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
+    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+    // Configurar UART5
+    huart5.Instance = UART5;
+    huart5.Init.BaudRate = 9600; // Baud rate típico para NMEA
+    huart5.Init.WordLength = UART_WORDLENGTH_8B;
+    huart5.Init.StopBits = UART_STOPBITS_1;
+    huart5.Init.Parity = UART_PARITY_NONE;
+    huart5.Init.Mode = UART_MODE_TX_RX;
+    huart5.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+    huart5.Init.OverSampling = UART_OVERSAMPLING_16;
+    HAL_UART_Init(&huart5);
+
+    // Configurar USART2
+    huart2.Instance = USART2;
+    huart2.Init.BaudRate = 9600;
+    huart2.Init.WordLength = UART_WORDLENGTH_8B;
+    huart2.Init.StopBits = UART_STOPBITS_1;
+    huart2.Init.Parity = UART_PARITY_NONE;
+    huart2.Init.Mode = UART_MODE_TX_RX;
+    huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+    huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+    HAL_UART_Init(&huart2);
+
+    // Habilitar la interrupción UART5
+    HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(UART5_IRQn);
+    HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char, 1);
+}

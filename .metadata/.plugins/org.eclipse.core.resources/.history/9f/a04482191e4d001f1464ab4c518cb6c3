@@ -1,0 +1,13 @@
+/*
+ * API_i2c.h
+ *
+ *  Created on: Jul 28, 2024
+ *      Author: felipe
+ */
+
+#ifndef API_INC_API_I2C_H_
+#define API_INC_API_I2C_H_
+
+
+
+#endif /* API_INC_API_I2C_H_ */

@@ -1,0 +1,12 @@
+../Drivers/API/Src/API_uart.c:21:13:UART5_GPIO_Init	1
+../Drivers/API/Src/API_uart.c:45:13:USART2_GPIO_Init	1
+../Drivers/API/Src/API_uart.c:67:8:UART5_Init	2
+../Drivers/API/Src/API_uart.c:90:8:USART2_Init	2
+../Drivers/API/Src/API_uart.c:129:6:UART5_Send_String	1
+../Drivers/API/Src/API_uart.c:133:6:USART2_Send_String	1
+../Drivers/API/Src/API_uart.c:137:19:UART5_Receive_Char	1
+../Drivers/API/Src/API_uart.c:142:19:USART2_Receive_Char	1
+../Drivers/API/Src/API_uart.c:149:6:UART5_IRQHandler	1
+../Drivers/API/Src/API_uart.c:161:6:HAL_UART_RxCpltCallback	4
+../Drivers/API/Src/API_uart.c:179:8:nmea_sentence_received	2
+../Drivers/API/Src/API_uart.c:188:7:get_nmea_sentence	1
