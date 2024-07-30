@@ -129,7 +129,7 @@ static void ExpanderWrite(uint8_t value)
 	HAL_I2C_Master_Transmit(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
 	DelayUS(20);
 }
-
+/*
 static void DelayUS(uint32_t us) {
 	uint32_t cycles = (SystemCoreClock/1000000L)*us;
 	uint32_t start = DWT->CYCCNT;
@@ -138,4 +138,38 @@ static void DelayUS(uint32_t us) {
 	do{
 		cnt = DWT->CYCCNT - start;
 	} while(cnt < cycles);
+}
+
+*/
+
+
+
+
+void DWT_Init(void) {
+    // Enable the DWT (Data Watchpoint and Trace) clock
+    if (!(CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk)) {
+        CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; // Enable Trace and Debug
+    }
+    DWT->CYCCNT = 0; // Reset the cycle counter
+    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk; // Enable the cycle counter
+}
+
+uint32_t DWT_GetMicroseconds(void) {
+    // Get the current count from the cycle counter
+    uint32_t cycles = DWT->CYCCNT;
+
+    // Convert cycles to microseconds
+    return (cycles / (SystemCoreClock / 1000000)); // SystemCoreClock is the system clock frequency in Hz
+}
+
+void delayMicroseconds(uint32_t us) {
+    uint32_t start = DWT_GetMicroseconds();
+    while (DWT_GetMicroseconds() - start < us) {
+        // Busy-wait for the desired number of microseconds
+    }
+}
+
+static void DelayUS(uint32_t us) {
+	DWT_Init();
+	delayMicroseconds(us);
 }

@@ -60,7 +60,9 @@ typedef struct {
 	double latitude, longitude, speed, trackAngle;
 	char date[7];
 	double trueTrack, magneticTrack, groundSpeedKnots, groundSpeedKph;
-	int fixQuality, numSatellites;
+	//int fixQuality,
+	int numSatellites;
+	char fixQuality[10];
 	double altitude;
 } NMEAData;
 

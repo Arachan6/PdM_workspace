@@ -80,7 +80,9 @@ bool_t Parse_NMEA_Sentence(const char* nmea) {
         strncpy(nmeaData.time, fields[GPGGA_TIME], sizeof(nmeaData.time) - 1); 	// UTC time in hhmmss.ss format
         nmeaData.latitude = atof(fields[GPGGA_LATITUDE]);                     	// Latitude in ddmm.mmmm format
         nmeaData.longitude = atof(fields[GPGGA_LONGITUDE]);                   	// Longitude in dddmm.mmmm format
-        nmeaData.fixQuality = atoi(fields[GPGGA_FIX_QUALITY]);                	// Fix quality (0 = invalid, 1 = GPS fix, 2 = DGPS fix)
+        //nmeaData.fixQuality = atoi(fields[GPGGA_FIX_QUALITY]);                	// Fix quality (0 = invalid, 1 = GPS fix, 2 = DGPS fix)
+        //nmeaData.fixQuality[0] = fields[GPGGA_FIX_QUALITY];
+        strncpy(nmeaData.fixQuality, fields[GPGGA_FIX_QUALITY], sizeof(nmeaData.fixQuality) - 1);
         nmeaData.numSatellites = atoi(fields[GPGGA_NUM_SATELLITES]);          	// Number of satellites being tracked
         nmeaData.hdop = atof(fields[GPGGA_HDOP]);                             	// Horizontal dilution of precision
         nmeaData.altitude = atof(fields[GPGGA_ALTITUDE]);                     	// Altitude above mean sea level in meters
