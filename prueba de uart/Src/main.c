@@ -3,6 +3,7 @@
 #include "API_gps.h"
 #include "API_i2c.h"
 #include "API_hd44780.h"
+#include "utils.h"
 
 /* Function prototypes */
 void SystemClock_Config(void);
@@ -49,8 +50,19 @@ int main(void){
     	HD44780_PrintStr("PC UART Error!");
     	Error_Handler();
     }
-
     HAL_Delay(500);
+
+
+    UART5_Send_String((uint8_t*)"$PMTK220,2000*1C\r\n");
+    char dest[100] = "$PMTK220,";
+	const char *src = "1000*1F\r\n";
+
+	// Concatenate src to dest
+	String_Concat(dest, src);
+    UART5_Send_String((uint8_t*)dest);
+
+
+
     while (1){
     	if (nmea_sentence_received() == true){
     		char* nmea_sentence = get_nmea_sentence();
@@ -62,12 +74,13 @@ int main(void){
 				nmeaData = Get_NMEA_Data();
 				USART2_Send_String((uint8_t*)"(DEBUG) NMEA Processed: Fix Quality: ");
 				USART2_Send_String((uint8_t*)nmeaData->fixQuality);
+				USART2_Send_String((uint8_t*)"\r\n");
 			}
     	}
     }
 }
 
-void SystemClock_Config(void){
+void SystemClock_Config(void) {
 }
 
 void Error_Handler(void){

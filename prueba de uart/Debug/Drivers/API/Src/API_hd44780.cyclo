@@ -9,7 +9,7 @@
 ../Drivers/API/Src/API_hd44780.c:105:13:SendData	1
 ../Drivers/API/Src/API_hd44780.c:112:13:SendCommand	1
 ../Drivers/API/Src/API_hd44780.c:119:13:ExpanderWrite	1
-../Drivers/API/Src/API_hd44780.c:148:6:DWT_Init	2
-../Drivers/API/Src/API_hd44780.c:157:10:DWT_GetMicroseconds	1
-../Drivers/API/Src/API_hd44780.c:165:6:delayMicroseconds	2
-../Drivers/API/Src/API_hd44780.c:172:13:DelayUS	1
+../Drivers/API/Src/API_hd44780.c:146:6:DWT_Init	2
+../Drivers/API/Src/API_hd44780.c:155:10:DWT_GetMicroseconds	1
+../Drivers/API/Src/API_hd44780.c:163:6:delayMicroseconds	2
+../Drivers/API/Src/API_hd44780.c:170:13:DelayUS	1

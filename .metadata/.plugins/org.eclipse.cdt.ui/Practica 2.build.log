@@ -1,4 +1,4 @@
-21:36:41 **** Incremental Build of configuration Debug for project Practica 2 ****
+21:30:14 **** Build of configuration Debug for project Practica 2 ****
 make -j4 all 
 arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/Core/Inc" -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f429xx.d" -MT"Startup/startup_stm32f429xx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f429xx.o" "../Startup/startup_stm32f429xx.s"
 arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/Practica 2/Drivers/Core/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
@@ -112,5 +112,5 @@ Finished building: default.size.stdout
 Finished building: Practica 2.list
  
 
-21:36:47 Build Finished. 0 errors, 0 warnings. (took 6s.467ms)
+21:30:19 Build Finished. 0 errors, 0 warnings. (took 4s.937ms)
 

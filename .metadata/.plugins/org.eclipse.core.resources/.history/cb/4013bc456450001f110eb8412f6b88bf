@@ -1,0 +1,13 @@
+/*
+ * utils.h
+ *
+ *  Created on: Aug 1, 2024
+ *      Author: felipe
+ */
+
+#ifndef UTILS_H_
+#define UTILS_H_
+
+bool_t String_Compare(const char *str1, const char *str2);
+
+#endif /* UTILS_H_ */

@@ -1,13 +1,14 @@
 /*
  * utils.h
  *
- *  Created on: Jul 28, 2024
+ *  Created on: Aug 1, 2024
  *      Author: felipe
  */
 
 #ifndef UTILS_H_
 #define UTILS_H_
 
-void DoubleToString(char* buffer, size_t bufferSize, double value);
+bool_t String_Compare(const char *str1, const char *str2);
+char *String_Concat(char *dest, const char *src);
 
 #endif /* UTILS_H_ */

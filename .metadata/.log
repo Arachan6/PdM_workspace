@@ -5790,3 +5790,18 @@ org.eclipse.core.runtime.CoreException: attempt to set description for a project
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1432)
 !SUBENTRY 1 org.eclipse.cdt.core 4 -1 2024-07-28 20:35:08.601
 !MESSAGE attempt to set description for a project which does not exist or not open
+!SESSION 2024-07-30 18:47:58.340 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-07-30 18:48:15.804
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-07-30 18:48:15.805
+!MESSAGE Log4j2 initialized with config file /home/felipe/Desktop/PdM_workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-07-30 18:48:24.766
+!MESSAGE Started RMI Server, listening on port 41337

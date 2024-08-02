@@ -1,0 +1,117 @@
+#include "stm32f4xx_hal.h"
+#include "API_uart.h"
+#include "API_gps.h"
+#include "API_i2c.h"
+#include "API_hd44780.h"
+
+/* Function prototypes */
+void SystemClock_Config(void);
+void Error_Handler(void);
+
+#define DEBUG true
+
+int main(void){
+
+	NMEAData* nmeaData;
+
+    HAL_Init();
+    SystemClock_Config();
+    I2C1_Init();
+	HD44780_Init(2);
+	HD44780_Clear();
+
+	HD44780_Set_Display(true);
+	HD44780_Set_Cursor(true);
+	HD44780_Set_Blink(true);
+	HD44780_Cursor_Position(0, 0);
+	HD44780_PrintStr("LCD Initialized!");
+
+	HAL_Delay(500);
+	HD44780_Clear();
+	HD44780_Cursor_Position(0, 0);
+	if (UART5_Init()){
+		HD44780_PrintStr("GPS UART");
+		HD44780_Cursor_Position(0, 1);
+		HD44780_PrintStr("Initialized!");
+	} else {
+		HD44780_PrintStr("GPS UART Error!");
+		Error_Handler();
+	}
+
+	HAL_Delay(500);
+	HD44780_Clear();
+	HD44780_Cursor_Position(0, 0);
+    if (USART2_Init()){
+    	HD44780_PrintStr("PC UART");
+		HD44780_Cursor_Position(0, 1);
+		HD44780_PrintStr("Initialized!");
+    } else {
+    	HD44780_PrintStr("PC UART Error!");
+    	Error_Handler();
+    }
+
+    HAL_Delay(500);
+    while (1){
+    	if (nmea_sentence_received() == true){
+    		char* nmea_sentence = get_nmea_sentence();
+			#if DEBUG
+    			USART2_Send_String((uint8_t*)"(DEBUG) NMEA Received: ");
+				USART2_Send_String((uint8_t*)nmea_sentence);
+			#endif
+			if (Parse_NMEA_Sentence(nmea_sentence)){
+				nmeaData = Get_NMEA_Data();
+				USART2_Send_String((uint8_t*)"(DEBUG) NMEA Processed: Fix Quality: ");
+				USART2_Send_String((uint8_t*)nmeaData->fixQuality);
+			}
+    	}
+    }
+}
+
+void SystemClock_Config(void) {
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+    /** Configure the main internal regulator output voltage
+     */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+
+    /** Initializes the RCC Oscillators according to the specified parameters
+     * in the RCC_OscInitTypeDef structure.
+     */
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+    RCC_OscInitStruct.PLL.PLLM = 8;
+    RCC_OscInitStruct.PLL.PLLN = 360;
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+    RCC_OscInitStruct.PLL.PLLQ = 7;
+    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+        Error_Handler();
+    }
+
+    /** Activate the Over-Drive mode
+     */
+    if (HAL_PWREx_EnableOverDrive() != HAL_OK) {
+        Error_Handler();
+    }
+
+    /** Initializes the CPU, AHB, and APB buses clocks
+     */
+    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+                                  | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK) {
+        Error_Handler();
+    }
+}
+
+void Error_Handler(void){
+    while (1){}
+}
+
+

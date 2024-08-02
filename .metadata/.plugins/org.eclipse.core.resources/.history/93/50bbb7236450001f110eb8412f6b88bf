@@ -1,0 +1,17 @@
+/*
+ * utils.c
+ *
+ *  Created on: Aug 1, 2024
+ *      Author: felipe
+ */
+
+#include "API_delay.h"
+
+bool_t String_Compare(const char *str1, const char *str2) {
+	// Loops until null terminator in str1 "\0"
+    while (*str1 && (*str1 == *str2)) {
+        str1++;
+        str2++;
+    }
+    return *str1 == *str2;
+}

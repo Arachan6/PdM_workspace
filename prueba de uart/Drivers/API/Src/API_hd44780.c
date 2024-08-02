@@ -143,8 +143,6 @@ static void DelayUS(uint32_t us) {
 */
 
 
-
-
 void DWT_Init(void) {
     // Enable the DWT (Data Watchpoint and Trace) clock
     if (!(CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk)) {
