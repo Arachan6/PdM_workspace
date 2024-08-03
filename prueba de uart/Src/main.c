@@ -50,19 +50,17 @@ int main(void){
     	HD44780_PrintStr("PC UART Error!");
     	Error_Handler();
     }
-    HAL_Delay(500);
-
-
-    UART5_Send_String((uint8_t*)"$PMTK220,2000*1C\r\n");
-    char dest[100] = "$PMTK220,";
-	const char *src = "1000*1F\r\n";
-
-	// Concatenate src to dest
-	String_Concat(dest, src);
-    UART5_Send_String((uint8_t*)dest);
 
 
 
+
+    //HAL_Delay(500);
+    GPS_Set_Update_Rate(2000); // Devuelve $PMTK001,220,3*30
+    //HAL_Delay(500);
+    GPS_Start_Logging(); // Devuelve $PMTK001,185,3*3C
+
+    void GPS_Dump_Flash_Data();
+    //HAL_Delay(5000);
     while (1){
     	if (nmea_sentence_received() == true){
     		char* nmea_sentence = get_nmea_sentence();
@@ -72,9 +70,11 @@ int main(void){
 			#endif
 			if (Parse_NMEA_Sentence(nmea_sentence)){
 				nmeaData = Get_NMEA_Data();
+			#if DEBUG
 				USART2_Send_String((uint8_t*)"(DEBUG) NMEA Processed: Fix Quality: ");
 				USART2_Send_String((uint8_t*)nmeaData->fixQuality);
 				USART2_Send_String((uint8_t*)"\r\n");
+			#endif
 			}
     	}
     }

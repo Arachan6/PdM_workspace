@@ -1,2 +1,5 @@
-../Src/utils.c:10:8:String_Compare	3
-../Src/utils.c:20:7:String_Concat	3
+../Src/utils.c:12:8:String_Compare	3
+../Src/utils.c:22:7:String_Concat	3
+../Src/utils.c:43:6:String_Split	6
+../Src/utils.c:67:15:String_XOR_Checksum	2
+../Src/utils.c:77:6:CHAR_To_HEX_String	1

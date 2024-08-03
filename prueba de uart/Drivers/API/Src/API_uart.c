@@ -168,6 +168,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
         	}
             nmea_index = 0;
             nmea_ready = true;
+            //USART2_Send_String((uint8_t*)nmea_ready_buffer);
         }
         nmea_incoming_buffer[nmea_index++] = rx_char;
 	}

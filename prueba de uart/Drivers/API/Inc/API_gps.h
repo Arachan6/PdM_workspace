@@ -8,10 +8,6 @@
 #ifndef API_INC_API_GPS_H_
 #define API_INC_API_GPS_H_
 
-// Constants for string split
-#define MAX_FIELDS 20
-#define MAX_FIELDS_LENGTH 50
-
 // Constants for GPGSA fields
 #define GPGSA_MODE 1
 #define GPGSA_FIX_TYPE 2
@@ -66,8 +62,10 @@ typedef struct {
 	double altitude;
 } NMEAData;
 
-void String_Split(const char* str, char delimiter, char fields[MAX_FIELDS][MAX_FIELDS_LENGTH], int* fieldCount);
 bool_t Parse_NMEA_Sentence(const char* nmea);
 const NMEAData* Get_NMEA_Data();
+void GPS_Set_Update_Rate(uint16_t rate);
+void GPS_Start_Logging();
+void GPS_Dump_Flash_Data();
 
 #endif /* API_INC_API_GPS_H_ */

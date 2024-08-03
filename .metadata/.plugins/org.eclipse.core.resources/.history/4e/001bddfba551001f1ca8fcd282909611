@@ -1,0 +1,81 @@
+/*
+ * utils.c
+ *
+ *  Created on: Aug 1, 2024
+ *      Author: felipe
+ */
+
+#include "API_delay.h"
+#include "utils.h"
+
+bool_t String_Compare(const char *str1, const char *str2) {
+	// Loops until null terminator in str1 "\0"
+    while (*str1 && (*str1 == *str2)) {
+        str1++;
+        str2++;
+    }
+    return *str1 == *str2;
+}
+
+// Function to concatenate src to the end of dest
+char *String_Concat(char *dest, const char *src) {
+    char *original_dest = dest;
+
+    // Move dest pointer to the end of the current string
+    while (*dest) {dest++;}
+
+    // Copy characters from src to the end of dest
+    while (*src) {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+
+    // Add null terminator
+    *dest = '\0';
+
+    // Return the original destination pointer
+    return original_dest;
+}
+
+// Function to split a string by a delimiter
+void String_Split(const char* str, char delimiter, char fields[MAX_FIELDS][MAX_FIELDS_LENGTH], int* fieldCount) {
+    *fieldCount = 0;
+    int length = strlen(str);
+    int fieldIndex = 0;
+    int charIndex = 0;
+
+    for (int i = 0; i < length; i++) {
+        if (str[i] == delimiter || str[i] == '\n') {
+            fields[fieldIndex][charIndex] = '\0'; // Null-terminate current field
+            fieldIndex++;
+            charIndex = 0;
+            if (fieldIndex >= MAX_FIELDS) break;
+        } else {
+            fields[fieldIndex][charIndex++] = str[i];
+            if (charIndex >= MAX_FIELDS_LENGTH - 1) {
+                fields[fieldIndex][charIndex] = '\0'; // Null-terminate and prevent overflow
+                charIndex = 0;
+            }
+        }
+    }
+    *fieldCount = fieldIndex + 1; // Account for the last field
+}
+
+// Function to calculate XOR checksum to given string
+unsigned char String_XOR_Checksum(const char* str) {
+    unsigned char checksum = 0;
+    while (*str) {
+        checksum ^= *str;
+        str++;
+    }
+    return checksum;
+}
+
+// Custom function to convert an unsigned char to a two-digit hexadecimal string
+void CHAR_To_HEX_String(unsigned char value, char* buffer) {
+    const char hexDigits[] = "0123456789ABCDEF";
+    buffer[0] = hexDigits[(value >> 4) & 0x0F]; // High nibble
+    buffer[1] = hexDigits[value & 0x0F];        // Low nibble
+    buffer[2] = '\0'; // Null-terminate the string
+}

@@ -16,31 +16,6 @@
 
 NMEAData nmeaData;
 
-// Function to split a string by a delimiter
-void String_Split(const char* str, char delimiter, char fields[MAX_FIELDS][MAX_FIELDS_LENGTH], int* fieldCount) {
-    *fieldCount = 0;
-    int length = strlen(str);
-    int fieldIndex = 0;
-    int charIndex = 0;
-
-    for (int i = 0; i < length; i++) {
-        if (str[i] == delimiter || str[i] == '\n') {
-            fields[fieldIndex][charIndex] = '\0'; // Null-terminate current field
-            fieldIndex++;
-            charIndex = 0;
-            if (fieldIndex >= MAX_FIELDS) break;
-        } else {
-            fields[fieldIndex][charIndex++] = str[i];
-            if (charIndex >= MAX_FIELDS_LENGTH - 1) {
-                fields[fieldIndex][charIndex] = '\0'; // Null-terminate and prevent overflow
-                charIndex = 0;
-            }
-        }
-    }
-    *fieldCount = fieldIndex + 1; // Account for the last field
-}
-
-
 bool_t Parse_NMEA_Sentence(const char* nmea) {
 	bool_t rtrn = true;
     char fields[MAX_FIELDS][MAX_FIELDS_LENGTH];
@@ -92,11 +67,35 @@ const NMEAData* Get_NMEA_Data() {
     return &nmeaData;
 }
 
+void GPS_Set_Update_Rate(uint16_t rate){
+	char send[100] = "$";
+	char dest[100] = "PMTK220,";
+	char src[10];
+	char checksumStr[3]; // Buffer to hold the hexadecimal string (2 digits + null terminator)
+	unsigned char checksum;
 
+	itoa(rate, src, 10);
+	String_Concat(dest, src);
 
+	checksum = String_XOR_Checksum(dest);
 
+	CHAR_To_HEX_String(checksum, checksumStr);
 
+	String_Concat(dest, "*");
+	String_Concat(dest, checksumStr);
+	String_Concat(dest, "\r\n");
+	String_Concat(send, dest);
 
+	UART5_Send_String((uint8_t*)send);
+}
+
+void GPS_Start_Logging(){
+	UART5_Send_String((uint8_t*)"$PMTK185,1*23\r\n");
+}
+
+void GPS_Dump_Flash_Data(){
+	UART5_Send_String((uint8_t*)"$PMTK622,0*28\r\n");
+}
 
 
 

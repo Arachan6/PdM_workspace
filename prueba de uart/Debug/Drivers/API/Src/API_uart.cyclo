@@ -8,5 +8,5 @@
 ../Drivers/API/Src/API_uart.c:142:19:USART2_Receive_Char	1
 ../Drivers/API/Src/API_uart.c:149:6:UART5_IRQHandler	1
 ../Drivers/API/Src/API_uart.c:161:6:HAL_UART_RxCpltCallback	4
-../Drivers/API/Src/API_uart.c:179:8:nmea_sentence_received	2
-../Drivers/API/Src/API_uart.c:188:7:get_nmea_sentence	1
+../Drivers/API/Src/API_uart.c:180:8:nmea_sentence_received	2
+../Drivers/API/Src/API_uart.c:189:7:get_nmea_sentence	1
