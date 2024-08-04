@@ -3,13 +3,14 @@
 #include "API_gps.h"
 #include "API_i2c.h"
 #include "API_hd44780.h"
+#include "API_pc.h"
 #include "utils.h"
 
 /* Function prototypes */
 void SystemClock_Config(void);
 void Error_Handler(void);
 
-#define DEBUG true
+#define DEBUG false
 
 int main(void){
 
@@ -51,16 +52,27 @@ int main(void){
     	Error_Handler();
     }
 
+    HAL_Delay(500);
+	HD44780_Clear();
+	HD44780_Cursor_Position(0, 0);
+	HD44780_PrintStr("Configuring GPS");
+	GPS_Configure_Init();
+	HD44780_Clear();
+	HD44780_Cursor_Position(0, 0);
+	HD44780_PrintStr("GPS Configured!");
+
+	HAL_Delay(500);
+	HD44780_Clear();
+	HD44780_Cursor_Position(0, 0);
+	HD44780_PrintStr("Processing Data");
+	HD44780_Cursor_Position(0, 1);
+	HD44780_PrintStr("FIX: 0");
+
+	GPS_Start_Logging();
 
 
 
-    //HAL_Delay(500);
-    GPS_Set_Update_Rate(2000); // Devuelve $PMTK001,220,3*30
-    //HAL_Delay(500);
-    GPS_Start_Logging(); // Devuelve $PMTK001,185,3*3C
 
-    void GPS_Dump_Flash_Data();
-    //HAL_Delay(5000);
     while (1){
     	if (nmea_sentence_received() == true){
     		char* nmea_sentence = get_nmea_sentence();
@@ -76,6 +88,13 @@ int main(void){
 				USART2_Send_String((uint8_t*)"\r\n");
 			#endif
 			}
+    	} if (pc_command_received() == true){
+    		char* pc_command = get_pc_command();
+			#if DEBUG
+    			USART2_Send_String((uint8_t*)"(DEBUG) PC Command Received: ");
+				USART2_Send_String((uint8_t*)pc_command);
+			#endif
+			Process_PC_Command(pc_command);
     	}
     }
 }

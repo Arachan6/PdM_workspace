@@ -10,13 +10,26 @@
 #include "main.h"
 
 #define UART_MAX_TIMEOUT 1000
-#define NMEA_BUFFER_SIZE 128
+#define NMEA_BUFFER_SIZE 255
+#define PC_BUFFER_SIZE 128
+
+#define NMEA_QUEUE_SIZE 10 // Maximum number of NMEA messages to store
+
+typedef struct {
+    uint8_t buffer[NMEA_QUEUE_SIZE][NMEA_BUFFER_SIZE];
+    uint8_t head; // Index of the next message to be dequeued
+    uint8_t tail; // Index of the next message to be enqueued
+    uint8_t count; // Number of messages currently in the queue
+} NMEA_Queue;
+
+NMEA_Queue nmea_queue = { .head = 0, .tail = 0, .count = 0 };
 
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart5;
 
-uint8_t rx_char;
-bool_t nmea_ready;
+uint8_t rx_char_gps;
+uint8_t rx_char_pc;
+bool_t nmea_available;
 
 static void UART5_GPIO_Init(void){
     GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -82,7 +95,7 @@ bool_t UART5_Init(void){
     // Habilitar interrupciones de UART5
 	HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(UART5_IRQn);
-	HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char, 1);
+	HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char_gps, 1);
 
 	return rtrn;
 }
@@ -105,6 +118,11 @@ bool_t USART2_Init(void){
     huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
     huart2.Init.OverSampling = UART_OVERSAMPLING_16;
     if (HAL_UART_Init(&huart2) != HAL_OK){rtrn=false;}
+
+    // Habilitar interrupciones de USART2
+	HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(USART2_IRQn);
+	HAL_UART_Receive_IT(&huart2, (uint8_t *)&rx_char_pc, 1);
 
     sprintf(baudRate, "%d",(int)huart2.Init.BaudRate);
 	sprintf(wordLength, "%d",(int)huart2.Init.WordLength);
@@ -154,46 +172,125 @@ void UART5_IRQHandler(void) {
     HAL_UART_IRQHandler(&huart5);
 }
 
-uint8_t nmea_incoming_buffer[NMEA_BUFFER_SIZE];
-uint8_t nmea_ready_buffer[NMEA_BUFFER_SIZE];
-uint8_t nmea_index = 0;
+// La función USART2_IRQHandler es la rutina de servicio de interrupción (ISR)
+// que se llama automáticamente cuando ocurre una interrupción asociada al USART2.
+void USART2_IRQHandler(void) {
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-
-    if (huart->Instance == UART5) {
-        if (rx_char == '$'){
-        	for (uint8_t i = 0; i < NMEA_BUFFER_SIZE; i++) {
-        	    nmea_ready_buffer[i] = nmea_incoming_buffer[i];
-        	    nmea_incoming_buffer[i] = 0;
-        	}
-            nmea_index = 0;
-            nmea_ready = true;
-            //USART2_Send_String((uint8_t*)nmea_ready_buffer);
-        }
-        nmea_incoming_buffer[nmea_index++] = rx_char;
-	}
-
-	// Continuar recibiendo el siguiente carácter
-	HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char, 1);
+	// La función HAL_UART_IRQHandler es parte de la HAL.
+	// Se encarga de identificar qué tipo de evento de interrupción ocurrió.
+	// Dependiendo del tipo, llamará a la función de callback correspondiente.
+    HAL_UART_IRQHandler(&huart2);
 }
 
-bool_t nmea_sentence_received(void){
+uint8_t nmea_incoming_buffer[NMEA_BUFFER_SIZE];
+uint8_t nmea_index = 0;
+
+uint8_t pc_incoming_buffer[PC_BUFFER_SIZE];
+uint8_t pc_ready_buffer[PC_BUFFER_SIZE];
+uint8_t pc_index = 0;
+bool_t pc_ready = false;
+bool_t receiving_data = false;
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == UART5) {
+        if (rx_char_gps == '$') {
+            if (nmea_queue.count < NMEA_QUEUE_SIZE) {
+                // Manually copy the incoming buffer to the queue
+                for (uint8_t i = 0; i < NMEA_BUFFER_SIZE; i++) {
+                    nmea_queue.buffer[nmea_queue.tail][i] = nmea_incoming_buffer[i];
+                }
+                nmea_queue.tail = (nmea_queue.tail + 1) % NMEA_QUEUE_SIZE;
+                nmea_queue.count++;
+            }
+            // Clear the incoming buffer
+            for (uint8_t i = 0; i < NMEA_BUFFER_SIZE; i++) {
+                nmea_incoming_buffer[i] = 0;
+            }
+            nmea_index = 0;
+            nmea_available = true;
+        }
+        nmea_incoming_buffer[nmea_index++] = rx_char_gps;
+        // Continue receiving the next character
+		HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char_gps, 1);
+
+    } else if (huart->Instance == USART2) {
+        if (rx_char_pc == '$') {
+            // Start accumulating data
+            receiving_data = true;
+            pc_index = 0; // Reset index to start storing the new sentence
+        }
+
+        if (receiving_data) {
+            pc_incoming_buffer[pc_index++] = rx_char_pc;
+
+            if (rx_char_pc == '\r') {
+                receiving_data = false; // Stop accumulating
+                pc_incoming_buffer[pc_index++] = '\0'; // Null-terminate the buffer
+
+                // Copy to the ready buffer
+                for (uint8_t i = 0; i < pc_index; i++) {
+                    pc_ready_buffer[i] = pc_incoming_buffer[i];
+                }
+                pc_ready = true;
+            }
+        }
+
+        // Continue receiving the next character
+        HAL_UART_Receive_IT(&huart2, (uint8_t *)&rx_char_pc, 1);
+    }
+}
+
+bool_t pc_command_received(void){
 	bool_t rtrn = false;
-	if (nmea_ready==true){
+	if (pc_ready==true){
 		rtrn=true;
-		nmea_ready=false;
+		pc_ready=false;
 	}
 	return rtrn;
 }
 
-char* get_nmea_sentence(void) {
-    return (char*) nmea_ready_buffer;
+char* get_pc_command(void) {
+    return (char*) pc_ready_buffer;
+}
+
+bool_t nmea_sentence_received(void) {
+    return nmea_queue.count > 0;
 }
 
 
+bool_t enqueue_nmea_message(const uint8_t* message) {
+    if (nmea_queue.count < NMEA_QUEUE_SIZE) {
+        // Manually copy the message to the queue buffer
+        for (uint8_t i = 0; i < NMEA_BUFFER_SIZE; i++) {
+            nmea_queue.buffer[nmea_queue.tail][i] = message[i];
+        }
+        nmea_queue.tail = (nmea_queue.tail + 1) % NMEA_QUEUE_SIZE;
+        nmea_queue.count++;
+        return true;
+    }
+    return false; // Queue is full
+}
 
+bool_t dequeue_nmea_message(uint8_t* message) {
+    if (nmea_queue.count > 0) {
+        // Manually copy the message from the queue buffer
+        for (uint8_t i = 0; i < NMEA_BUFFER_SIZE; i++) {
+            message[i] = nmea_queue.buffer[nmea_queue.head][i];
+        }
+        nmea_queue.head = (nmea_queue.head + 1) % NMEA_QUEUE_SIZE;
+        nmea_queue.count--;
+        return true;
+    }
+    return false; // Queue is empty
+}
 
-
+char* get_nmea_sentence(void) {
+    static uint8_t message[NMEA_BUFFER_SIZE];
+    if (dequeue_nmea_message(message)) {
+        return (char*)message;
+    }
+    return NULL; // No message available
+}
 
 
 

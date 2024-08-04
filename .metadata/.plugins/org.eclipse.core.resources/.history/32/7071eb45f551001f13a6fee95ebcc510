@@ -1,0 +1,27 @@
+/*
+ * API_pc.c
+ *
+ *  Created on: Aug 3, 2024
+ *      Author: felipe
+ */
+
+#include "API_pc.h"
+#include "API_gps.h"
+#include "API_delay.h"
+
+bool_t Process_PC_Command(const char* pc_command) {
+	bool_t rtrn = true;
+
+    if (String_Compare(pc_command, "$DUMP\n\r") == 1) {
+    	GPS_Dump_Partial_Flash_Data();
+    	rtrn = true;
+
+    } else if (String_Compare(pc_command, "$ERASE\n\r") == 1) {
+    	GPS_Dump_Partial_Flash_Data();
+    	rtrn = true;
+
+    } else {
+    	rtrn = false;
+    }
+    return rtrn;
+}

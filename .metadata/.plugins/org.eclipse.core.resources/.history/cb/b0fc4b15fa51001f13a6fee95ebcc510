@@ -1,0 +1,21 @@
+/*
+ * utils.h
+ *
+ *  Created on: Aug 1, 2024
+ *      Author: felipe
+ */
+
+#ifndef UTILS_H_
+#define UTILS_H_
+
+// Constants for string split
+#define MAX_FIELDS 20
+#define MAX_FIELDS_LENGTH 50
+
+bool_t String_Compare(const char *str1, const char *str2);
+char *String_Concat(char *dest, const char *src);
+void String_Split(const char* str, char delimiter, char fields[MAX_FIELDS][MAX_FIELDS_LENGTH], int* fieldCount);
+unsigned char String_XOR_Checksum(const char* str);
+void CHAR_To_HEX_String(unsigned char value, char* buffer);
+
+#endif /* UTILS_H_ */

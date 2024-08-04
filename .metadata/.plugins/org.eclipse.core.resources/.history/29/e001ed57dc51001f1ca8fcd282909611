@@ -1,0 +1,73 @@
+/*
+ * API_gps.h
+ *
+ *  Created on: Jul 28, 2024
+ *      Author: felipe
+ */
+
+#ifndef API_INC_API_GPS_H_
+#define API_INC_API_GPS_H_
+
+// Constants for GPGSA fields
+#define GPGSA_MODE 1
+#define GPGSA_FIX_TYPE 2
+#define GPGSA_PDOP 15
+#define GPGSA_HDOP 16
+#define GPGSA_VDOP 17
+
+// Constants for GPGSV fields
+#define GPGSV_NUM_MESSAGES 1
+#define GPGSV_MESSAGE_NUMBER 2
+#define GPGSV_SATELLITES_IN_VIEW 3
+
+// Constants for GPRMC fields
+#define GPRMC_TIME 1
+#define GPRMC_STATUS 2
+#define GPRMC_LATITUDE 3
+#define GPRMC_LONGITUDE 5
+#define GPRMC_SPEED 7
+#define GPRMC_TRACK_ANGLE 8
+#define GPRMC_DATE 9
+
+// Constants for GPVTG fields
+#define GPVTG_TRUE_TRACK 1
+#define GPVTG_MAGNETIC_TRACK 3
+#define GPVTG_SPEED_KNOTS 5
+#define GPVTG_SPEED_KPH 7
+
+// Constants for GPGGA fields
+#define GPGGA_TIME 1
+#define GPGGA_LATITUDE 2
+#define GPGGA_LONGITUDE 4
+#define GPGGA_FIX_QUALITY 6
+#define GPGGA_NUM_SATELLITES 7
+#define GPGGA_HDOP 8
+#define GPGGA_ALTITUDE 9
+
+// Struct to hold NMEA sentence data
+typedef struct {
+	char sentenceType[7];
+	char mode;
+	int fixType;
+	float pdop, hdop, vdop;
+	int numOfMessages, messageNumber, satellitesInView;
+	char time[11];
+	char status;
+	double latitude, longitude, speed, trackAngle;
+	char date[7];
+	double trueTrack, magneticTrack, groundSpeedKnots, groundSpeedKph;
+	//int fixQuality,
+	int numSatellites;
+	char fixQuality[10];
+	double altitude;
+} NMEAData;
+
+bool_t Parse_NMEA_Sentence(const char* nmea);
+const NMEAData* Get_NMEA_Data();
+void GPS_Set_Update_Rate(uint16_t rate);
+void GPS_Start_Logging();
+void GPS_Dump_Full_Flash_Data();
+void GPS_Dump_Partial_Flash_Data();
+void GPS_Query_Logging_Status();
+
+#endif /* API_INC_API_GPS_H_ */

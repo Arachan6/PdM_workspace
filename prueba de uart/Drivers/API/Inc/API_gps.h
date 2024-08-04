@@ -66,6 +66,12 @@ bool_t Parse_NMEA_Sentence(const char* nmea);
 const NMEAData* Get_NMEA_Data();
 void GPS_Set_Update_Rate(uint16_t rate);
 void GPS_Start_Logging();
-void GPS_Dump_Flash_Data();
+void GPS_Stop_Logging();
+void GPS_Dump_Full_Flash_Data();
+void GPS_Dump_Partial_Flash_Data();
+void GPS_Erase_Flash_Data();
+void GPS_Query_Logging_Status();
+void GPS_Configure_Init();
+void GPS_Log_Now();
 
 #endif /* API_INC_API_GPS_H_ */

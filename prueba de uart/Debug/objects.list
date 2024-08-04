@@ -3,6 +3,7 @@
 "./Drivers/API/Src/API_gps.o"
 "./Drivers/API/Src/API_hd44780.o"
 "./Drivers/API/Src/API_i2c.o"
+"./Drivers/API/Src/API_pc.o"
 "./Drivers/API/Src/API_uart.o"
 "./Drivers/BSP/STM32F4xx_Nucleo_144/stm32f4xx_nucleo_144.o"
 "./Drivers/CMSIS/system_stm32f4xx.o"

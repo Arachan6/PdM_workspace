@@ -24,6 +24,7 @@ bool_t Parse_NMEA_Sentence(const char* nmea) {
 
     if (fieldCount < 1) {rtrn=false;} // Not enough fields
     strncpy(nmeaData.sentenceType, fields[0], sizeof(nmeaData.sentenceType) - 1);
+
     if (String_Compare(nmeaData.sentenceType, "$GPGSA") == 1) {
         nmeaData.mode = fields[GPGSA_MODE][0];            						// Mode (e.g., 'A' for automatic, 'M' for manual)
         nmeaData.fixType = atoi(fields[GPGSA_FIX_TYPE]);  						// Fix type (1 = no fix, 2 = 2D fix, 3 = 3D fix)
@@ -59,6 +60,9 @@ bool_t Parse_NMEA_Sentence(const char* nmea) {
         nmeaData.numSatellites = atoi(fields[GPGGA_NUM_SATELLITES]);          						// Number of satellites being tracked
         nmeaData.hdop = atof(fields[GPGGA_HDOP]);                             						// Horizontal dilution of precision
         nmeaData.altitude = atof(fields[GPGGA_ALTITUDE]);                     						// Altitude above mean sea level in meters
+
+    } else if (String_Compare(nmeaData.sentenceType, "$PMTKL") == 1) {
+    	USART2_Send_String((uint8_t*)nmea);
     }
     return rtrn;
 }
@@ -90,15 +94,37 @@ void GPS_Set_Update_Rate(uint16_t rate){
 }
 
 void GPS_Start_Logging(){
+	UART5_Send_String((uint8_t*)"$PMTK185,0*22\r\n");
+}
+
+void GPS_Stop_Logging(){
 	UART5_Send_String((uint8_t*)"$PMTK185,1*23\r\n");
 }
 
-void GPS_Dump_Flash_Data(){
+void GPS_Dump_Full_Flash_Data(){
 	UART5_Send_String((uint8_t*)"$PMTK622,0*28\r\n");
 }
 
+void GPS_Dump_Partial_Flash_Data(){
+	UART5_Send_String((uint8_t*)"$PMTK622,1*29\r\n");
+}
 
+void GPS_Erase_Flash_Data(){
+	UART5_Send_String((uint8_t*)"$PMTK184,1*22\r\n");
+}
 
+void GPS_Query_Logging_Status(){
+	UART5_Send_String((uint8_t*)"$PMTK183*38\r\n");
+}
+
+void GPS_Configure_Init(){
+	GPS_Stop_Logging();
+	GPS_Set_Update_Rate(2000);
+}
+
+void GPS_Log_Now(){
+	UART5_Send_String((uint8_t*)"$PMTK186,1*20\r\n");
+}
 
 
 
