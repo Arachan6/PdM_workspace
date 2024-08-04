@@ -12,6 +12,7 @@
 #include "API_uart.h"
 #include "API_gps.h"
 #include "API_delay.h"
+#include "API_hd44780.h"
 #include "utils.h"
 
 NMEAData nmeaData;
@@ -138,11 +139,11 @@ void GPS_Log_Now(){
 
 
 
-/*
+
 
 
 #define VALID_FIX_TIME 30000
-
+NMEAData* stateData;
 
 typedef enum{
 	STATE_IDLE,
@@ -154,43 +155,57 @@ static bool_t navFix;
 static gpsState_t gpsState;
 static delay_t d1;
 
+
 void gpsFSM_init(){
 	gpsState = STATE_IDLE;
 	delayInit(&d1, VALID_FIX_TIME);
 }
 
 void gpsFSM_update(){
+
+	stateData = Get_NMEA_Data();
+
 	switch(gpsState){
 		case STATE_IDLE:
-			if (BSP_PB_GetState(BUTTON_USER)){
-				buttonState = BUTTON_FALLING;
+			if (stateData->fixQuality[0]=='1'){
+				gpsState = STATE_FIX;
+				HD44780_Clear();
+				HD44780_Cursor_Position(0, 0);
+				HD44780_PrintStr("Processing Data");
+				HD44780_Cursor_Position(0, 1);
+				HD44780_PrintStr("State: FIX");
 				delayRead(&d1);
 			}
 			break;
 		case STATE_FIX:
-			if (!BSP_PB_GetState(BUTTON_USER)){
-				buttonState = BUTTON_RAISING;
-				delayRead(&d1);
+			if (stateData->fixQuality[0]=='1'){
+				if (delayRead(&d1)){
+					gpsState = STATE_NAV;
+					HD44780_Clear();
+					HD44780_Cursor_Position(0, 0);
+					HD44780_PrintStr("Processing Data");
+					HD44780_Cursor_Position(0, 1);
+					HD44780_PrintStr("State: NAV");
+				}
+			} else {
+				delayInit(&d1, VALID_FIX_TIME);
+				gpsState = STATE_IDLE;
+				HD44780_Clear();
+				HD44780_Cursor_Position(0, 0);
+				HD44780_PrintStr("Processing Data");
+				HD44780_Cursor_Position(0, 1);
+				HD44780_PrintStr("State: IDLE");
 			}
 			break;
 		case STATE_NAV:
-			if (delayRead(&d1)){
-				if (!BSP_PB_GetState(BUTTON_USER)){
-					buttonState = BUTTON_UP;
-					buttonReleased();
-				} else {
-					buttonState = BUTTON_DOWN;
-				}
-			}
-			break;
-		case BUTTON_FALLING:
-			if (delayRead(&d1)){
-				if (BSP_PB_GetState(BUTTON_USER)){
-					buttonState = BUTTON_DOWN;
-					buttonPressed();
-				} else {
-					buttonState = BUTTON_UP;
-				}
+			if (stateData->fixQuality[0]=='0'){
+				delayInit(&d1, VALID_FIX_TIME);
+				gpsState = STATE_IDLE;
+				HD44780_Clear();
+				HD44780_Cursor_Position(0, 0);
+				HD44780_PrintStr("Processing Data");
+				HD44780_Cursor_Position(0, 1);
+				HD44780_PrintStr("State: IDLE");
 			}
 			break;
 		default:
@@ -199,38 +214,3 @@ void gpsFSM_update(){
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-void buttonPressed(){
-	BSP_LED_On(LED1);
-	buttonPress=true;
-}
-
-
-void buttonReleased(){
-	BSP_LED_Off(LED1);
-}
-
-bool_t readKey(){
-	bool_t rtrn = false;
-
-	if (buttonPress==true){
-		rtrn=true;
-		buttonPress=false;
-	}
-
-	return rtrn;
-}
-
-*/

@@ -10,7 +10,7 @@
 void SystemClock_Config(void);
 void Error_Handler(void);
 
-#define DEBUG false
+#define DEBUG true
 
 int main(void){
 
@@ -19,6 +19,7 @@ int main(void){
     HAL_Init();
     SystemClock_Config();
     I2C1_Init();
+    gpsFSM_init();
 	HD44780_Init(2);
 	HD44780_Clear();
 
@@ -66,14 +67,11 @@ int main(void){
 	HD44780_Cursor_Position(0, 0);
 	HD44780_PrintStr("Processing Data");
 	HD44780_Cursor_Position(0, 1);
-	HD44780_PrintStr("FIX: 0");
-
-	GPS_Start_Logging();
-
-
-
+	HD44780_PrintStr("State: IDLE");
+	HAL_Delay(500);
 
     while (1){
+    	gpsFSM_update();
     	if (nmea_sentence_received() == true){
     		char* nmea_sentence = get_nmea_sentence();
 			#if DEBUG
