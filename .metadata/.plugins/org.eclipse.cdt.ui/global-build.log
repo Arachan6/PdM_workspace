@@ -1,247 +1,47 @@
-13:39:21 **** Incremental Build of configuration Debug for project prueba de uart ****
+15:48:38 **** Incremental Build of configuration Debug for project prueba de uart ****
 make -j4 all 
-arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
-../Drivers/API/Src/API_gps.c:158:11: error: conflicting types for 'nmeaData'; have 'NMEAData *'
-  158 | NMEAData* nmeaData;
-      |           ^~~~~~~~
-../Drivers/API/Src/API_gps.c:18:10: note: previous declaration of 'nmeaData' with type 'NMEAData'
-   18 | NMEAData nmeaData;
-      |          ^~~~~~~~
-../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
-../Drivers/API/Src/API_gps.c:197:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
-  197 |                         Error_Handler();
-      |                         ^~~~~~~~~~~~~
-../Drivers/API/Src/API_gps.c: At top level:
-../Drivers/API/Src/API_gps.c:154:15: warning: 'navFix' defined but not used [-Wunused-variable]
-  154 | static bool_t navFix;
-      |               ^~~~~~
-make: *** [Drivers/API/Src/subdir.mk:37: Drivers/API/Src/API_gps.o] Error 1
-"make -j4 all" terminated with exit code 2. Build might be incomplete.
-14:13:21 **** Incremental Build of configuration Debug for project prueba de uart ****
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780_port.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780_port.d" -MT"Drivers/API/Src/API_hd44780_port.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780_port.o"
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t, uint8_t);
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34212	    468	   5632	  40312	   9d78	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+15:49:14 **** Incremental Build of configuration Debug for project prueba de uart ****
 make -j4 all 
-arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
-../Drivers/API/Src/API_gps.c: In function 'Parse_NMEA_Sentence':
-../Drivers/API/Src/API_gps.c:27:21: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   27 |     strncpy(nmeaData.sentenceType, fields[0], sizeof(nmeaData.sentenceType) - 1);
-      |                     ^
-      |                     ->
-../Drivers/API/Src/API_gps.c:27:62: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   27 |     strncpy(nmeaData.sentenceType, fields[0], sizeof(nmeaData.sentenceType) - 1);
-      |                                                              ^
-      |                                                              ->
-../Drivers/API/Src/API_gps.c:29:32: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   29 |     if (String_Compare(nmeaData.sentenceType, "$GPGSA") == 1) {
-      |                                ^
-      |                                ->
-../Drivers/API/Src/API_gps.c:30:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   30 |         nmeaData.mode = fields[GPGSA_MODE][0];                                                          // Mode (e.g., 'A' for automatic, 'M' for manual)
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:31:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   31 |         nmeaData.fixType = atoi(fields[GPGSA_FIX_TYPE]);                                                // Fix type (1 = no fix, 2 = 2D fix, 3 = 3D fix)
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:32:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   32 |         nmeaData.pdop = atof(fields[GPGSA_PDOP]);                                                       // Position dilution of precision
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:33:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   33 |         nmeaData.hdop = atof(fields[GPGSA_HDOP]);                                                       // Horizontal dilution of precision
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:34:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   34 |         nmeaData.vdop = atof(fields[GPGSA_VDOP]);                                                       // Vertical dilution of precision
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:36:39: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   36 |     } else if (String_Compare(nmeaData.sentenceType, "$GPGSV") == 1) {
-      |                                       ^
-      |                                       ->
-../Drivers/API/Src/API_gps.c:37:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   37 |         nmeaData.numOfMessages = atoi(fields[GPGSV_NUM_MESSAGES]);                      // Total number of GSV messages to be transmitted
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:38:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   38 |         nmeaData.messageNumber = atoi(fields[GPGSV_MESSAGE_NUMBER]);                    // Message number
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:39:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   39 |         nmeaData.satellitesInView = atoi(fields[GPGSV_SATELLITES_IN_VIEW]);     // Total number of satellites in view
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:41:39: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   41 |     } else if (String_Compare(nmeaData.sentenceType, "$GPRMC") == 1) {
-      |                                       ^
-      |                                       ->
-../Drivers/API/Src/API_gps.c:42:25: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   42 |         strncpy(nmeaData.time, fields[GPRMC_TIME], sizeof(nmeaData.time) - 1);  // UTC time in hhmmss.ss format
-      |                         ^
-      |                         ->
-../Drivers/API/Src/API_gps.c:42:67: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   42 |         strncpy(nmeaData.time, fields[GPRMC_TIME], sizeof(nmeaData.time) - 1);  // UTC time in hhmmss.ss format
-      |                                                                   ^
-      |                                                                   ->
-../Drivers/API/Src/API_gps.c:43:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   43 |         nmeaData.status = fields[GPRMC_STATUS][0];                              // Status (A = active, V = void)
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:44:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   44 |         nmeaData.latitude = atof(fields[GPRMC_LATITUDE]);                       // Latitude in ddmm.mmmm format
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:45:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   45 |         nmeaData.longitude = atof(fields[GPRMC_LONGITUDE]);                     // Longitude in dddmm.mmmm format
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:46:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   46 |         nmeaData.speed = atof(fields[GPRMC_SPEED]);                             // Speed over ground in knots
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:47:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   47 |         nmeaData.trackAngle = atof(fields[GPRMC_TRACK_ANGLE]);                  // Track angle in degrees True
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:48:25: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   48 |         strncpy(nmeaData.date, fields[GPRMC_DATE], sizeof(nmeaData.date) - 1);  // Date in ddmmyy format
-      |                         ^
-      |                         ->
-../Drivers/API/Src/API_gps.c:48:67: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   48 |         strncpy(nmeaData.date, fields[GPRMC_DATE], sizeof(nmeaData.date) - 1);  // Date in ddmmyy format
-      |                                                                   ^
-      |                                                                   ->
-../Drivers/API/Src/API_gps.c:50:39: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   50 |     } else if (String_Compare(nmeaData.sentenceType, "$GPVTG") == 1) {
-      |                                       ^
-      |                                       ->
-../Drivers/API/Src/API_gps.c:51:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   51 |         nmeaData.trueTrack = atof(fields[GPVTG_TRUE_TRACK]);                    // True track made good (degrees)
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:52:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   52 |         nmeaData.magneticTrack = atof(fields[GPVTG_MAGNETIC_TRACK]);            // Magnetic track made good (degrees)
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:53:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   53 |         nmeaData.groundSpeedKnots = atof(fields[GPVTG_SPEED_KNOTS]);            // Ground speed in knots
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:54:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   54 |         nmeaData.groundSpeedKph = atof(fields[GPVTG_SPEED_KPH]);                // Ground speed in kilometers per hour
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:56:39: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   56 |     } else if (String_Compare(nmeaData.sentenceType, "$GPGGA") == 1) {
-      |                                       ^
-      |                                       ->
-../Drivers/API/Src/API_gps.c:57:25: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   57 |         strncpy(nmeaData.time, fields[GPGGA_TIME], sizeof(nmeaData.time) - 1);                                          // UTC time in hhmmss.ss format
-      |                         ^
-      |                         ->
-../Drivers/API/Src/API_gps.c:57:67: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   57 |         strncpy(nmeaData.time, fields[GPGGA_TIME], sizeof(nmeaData.time) - 1);                                          // UTC time in hhmmss.ss format
-      |                                                                   ^
-      |                                                                   ->
-../Drivers/API/Src/API_gps.c:58:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   58 |         nmeaData.latitude = atof(fields[GPGGA_LATITUDE]);                                                               // Latitude in ddmm.mmmm format
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:59:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   59 |         nmeaData.longitude = atof(fields[GPGGA_LONGITUDE]);                                                             // Longitude in dddmm.mmmm format
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:60:25: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   60 |         strncpy(nmeaData.fixQuality, fields[GPGGA_FIX_QUALITY], sizeof(nmeaData.fixQuality) - 1);       // Fix quality (0 = invalid, 1 = GPS fix, 2 = DGPS fix)
-      |                         ^
-      |                         ->
-../Drivers/API/Src/API_gps.c:60:80: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   60 |         strncpy(nmeaData.fixQuality, fields[GPGGA_FIX_QUALITY], sizeof(nmeaData.fixQuality) - 1);       // Fix quality (0 = invalid, 1 = GPS fix, 2 = DGPS fix)
-      |                                                                                ^
-      |                                                                                ->
-../Drivers/API/Src/API_gps.c:61:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   61 |         nmeaData.numSatellites = atoi(fields[GPGGA_NUM_SATELLITES]);                                                    // Number of satellites being tracked
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:62:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   62 |         nmeaData.hdop = atof(fields[GPGGA_HDOP]);                                                                       // Horizontal dilution of precision
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:63:17: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   63 |         nmeaData.altitude = atof(fields[GPGGA_ALTITUDE]);                                                               // Altitude above mean sea level in meters
-      |                 ^
-      |                 ->
-../Drivers/API/Src/API_gps.c:65:39: error: 'nmeaData' is a pointer; did you mean to use '->'?
-   65 |     } else if (String_Compare(nmeaData.sentenceType, "$PMTKL") == 1) {
-      |                                       ^
-      |                                       ->
-../Drivers/API/Src/API_gps.c: In function 'Get_NMEA_Data':
-../Drivers/API/Src/API_gps.c:72:12: warning: returning 'NMEAData **' from a function with incompatible return type 'const NMEAData *' [-Wincompatible-pointer-types]
-   72 |     return &nmeaData;
-      |            ^~~~~~~~~
-../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
-../Drivers/API/Src/API_gps.c:166:18: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-  166 |         nmeaData = Get_NMEA_Data();
-      |                  ^
-../Drivers/API/Src/API_gps.c:170:49: warning: comparison with string literal results in unspecified behavior [-Waddress]
-  170 |                         if (nmeaData->fixQuality=="1"){
-      |                                                 ^~
-../Drivers/API/Src/API_gps.c:177:49: warning: comparison with string literal results in unspecified behavior [-Waddress]
-  177 |                         if (nmeaData->fixQuality=="1"){
-      |                                                 ^~
-../Drivers/API/Src/API_gps.c:189:49: warning: comparison with string literal results in unspecified behavior [-Waddress]
-  189 |                         if (nmeaData->fixQuality=="0"){
-      |                                                 ^~
-../Drivers/API/Src/API_gps.c:196:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
-  196 |                         Error_Handler();
-      |                         ^~~~~~~~~~~~~
-../Drivers/API/Src/API_gps.c: At top level:
-../Drivers/API/Src/API_gps.c:154:15: warning: 'navFix' defined but not used [-Wunused-variable]
-  154 | static bool_t navFix;
-      |               ^~~~~~
-make: *** [Drivers/API/Src/subdir.mk:37: Drivers/API/Src/API_gps.o] Error 1
-"make -j4 all" terminated with exit code 2. Build might be incomplete.
-14:13:56 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
-../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
-../Drivers/API/Src/API_gps.c:166:20: error: incompatible types when assigning to type 'NMEAData' from type 'const NMEAData *'
-  166 |         nmeaData = Get_NMEA_Data();
-      |                    ^~~~~~~~~~~~~
-../Drivers/API/Src/API_gps.c:170:37: error: invalid type argument of '->' (have 'NMEAData')
-  170 |                         if (nmeaData->fixQuality=="1"){
-      |                                     ^~
-../Drivers/API/Src/API_gps.c:177:37: error: invalid type argument of '->' (have 'NMEAData')
-  177 |                         if (nmeaData->fixQuality=="1"){
-      |                                     ^~
-../Drivers/API/Src/API_gps.c:189:37: error: invalid type argument of '->' (have 'NMEAData')
-  189 |                         if (nmeaData->fixQuality=="0"){
-      |                                     ^~
-../Drivers/API/Src/API_gps.c:196:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
-  196 |                         Error_Handler();
-      |                         ^~~~~~~~~~~~~
-../Drivers/API/Src/API_gps.c: At top level:
-../Drivers/API/Src/API_gps.c:154:15: warning: 'navFix' defined but not used [-Wunused-variable]
-  154 | static bool_t navFix;
-      |               ^~~~~~
-make: *** [Drivers/API/Src/subdir.mk:37: Drivers/API/Src/API_gps.o] Error 1
-"make -j4 all" terminated with exit code 2. Build might be incomplete.
-14:14:18 **** Incremental Build of configuration Debug for project prueba de uart ****
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t, uint8_t);
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34260	    468	   5632	  40360	   9da8	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+15:53:36 **** Incremental Build of configuration Debug for project prueba de uart ****
 make -j4 all 
 arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
 ../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
 ../Drivers/API/Src/API_gps.c:166:19: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
   166 |         stateData = Get_NMEA_Data();
       |                   ^
-../Drivers/API/Src/API_gps.c:170:50: warning: comparison with string literal results in unspecified behavior [-Waddress]
-  170 |                         if (stateData->fixQuality=="1"){
-      |                                                  ^~
-../Drivers/API/Src/API_gps.c:177:50: warning: comparison with string literal results in unspecified behavior [-Waddress]
-  177 |                         if (stateData->fixQuality=="1"){
-      |                                                  ^~
-../Drivers/API/Src/API_gps.c:189:50: warning: comparison with string literal results in unspecified behavior [-Waddress]
-  189 |                         if (stateData->fixQuality=="0"){
-      |                                                  ^~
-../Drivers/API/Src/API_gps.c:196:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
-  196 |                         Error_Handler();
+../Drivers/API/Src/API_gps.c:214:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
+  214 |                         Error_Handler();
       |                         ^~~~~~~~~~~~~
 ../Drivers/API/Src/API_gps.c: At top level:
 ../Drivers/API/Src/API_gps.c:154:15: warning: 'navFix' defined but not used [-Wunused-variable]
@@ -253,218 +53,7 @@ Finished building target: prueba de uart.elf
 arm-none-eabi-size  prueba\ de\ uart.elf 
 arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
    text	   data	    bss	    dec	    hex	filename
-  34044	    468	   5632	  40144	   9cd0	prueba de uart.elf
-Finished building: default.size.stdout
- 
-Finished building: prueba de uart.list
- 
-14:16:15 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
-../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
-../Drivers/API/Src/API_gps.c:166:19: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-  166 |         stateData = Get_NMEA_Data();
-      |                   ^
-../Drivers/API/Src/API_gps.c:170:50: warning: comparison with string literal results in unspecified behavior [-Waddress]
-  170 |                         if (stateData->fixQuality=="1"){
-      |                                                  ^~
-../Drivers/API/Src/API_gps.c:181:50: warning: comparison with string literal results in unspecified behavior [-Waddress]
-  181 |                         if (stateData->fixQuality=="1"){
-      |                                                  ^~
-../Drivers/API/Src/API_gps.c:201:50: warning: comparison with string literal results in unspecified behavior [-Waddress]
-  201 |                         if (stateData->fixQuality=="0"){
-      |                                                  ^~
-../Drivers/API/Src/API_gps.c:212:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
-  212 |                         Error_Handler();
-      |                         ^~~~~~~~~~~~~
-../Drivers/API/Src/API_gps.c: At top level:
-../Drivers/API/Src/API_gps.c:154:15: warning: 'navFix' defined but not used [-Wunused-variable]
-  154 | static bool_t navFix;
-      |               ^~~~~~
-arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: prueba de uart.elf
- 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
-   text	   data	    bss	    dec	    hex	filename
-  34244	    468	   5632	  40344	   9d98	prueba de uart.elf
-Finished building: default.size.stdout
- 
-Finished building: prueba de uart.list
- 
-14:16:46 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-   text	   data	    bss	    dec	    hex	filename
-  34244	    468	   5632	  40344	   9d98	prueba de uart.elf
-Finished building: default.size.stdout
- 
-14:17:29 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-   text	   data	    bss	    dec	    hex	filename
-  34244	    468	   5632	  40344	   9d98	prueba de uart.elf
-Finished building: default.size.stdout
- 
-14:17:37 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-   text	   data	    bss	    dec	    hex	filename
-  34244	    468	   5632	  40344	   9d98	prueba de uart.elf
-Finished building: default.size.stdout
- 
-14:48:00 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-   text	   data	    bss	    dec	    hex	filename
-  34244	    468	   5632	  40344	   9d98	prueba de uart.elf
-Finished building: default.size.stdout
- 
-14:48:47 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-   text	   data	    bss	    dec	    hex	filename
-  34244	    468	   5632	  40344	   9d98	prueba de uart.elf
-Finished building: default.size.stdout
- 
-14:49:58 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
-../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
-../Drivers/API/Src/API_gps.c:166:19: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-  166 |         stateData = Get_NMEA_Data();
-      |                   ^
-../Drivers/API/Src/API_gps.c:170:53: warning: comparison between pointer and integer
-  170 |                         if (stateData->fixQuality[0]=="1"){
-      |                                                     ^~
-../Drivers/API/Src/API_gps.c:170:53: warning: comparison with string literal results in unspecified behavior [-Waddress]
-../Drivers/API/Src/API_gps.c:181:53: warning: comparison between pointer and integer
-  181 |                         if (stateData->fixQuality[0]=="1"){
-      |                                                     ^~
-../Drivers/API/Src/API_gps.c:181:53: warning: comparison with string literal results in unspecified behavior [-Waddress]
-../Drivers/API/Src/API_gps.c:201:53: warning: comparison between pointer and integer
-  201 |                         if (stateData->fixQuality[0]=="0"){
-      |                                                     ^~
-../Drivers/API/Src/API_gps.c:201:53: warning: comparison with string literal results in unspecified behavior [-Waddress]
-../Drivers/API/Src/API_gps.c:212:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
-  212 |                         Error_Handler();
-      |                         ^~~~~~~~~~~~~
-../Drivers/API/Src/API_gps.c: At top level:
-../Drivers/API/Src/API_gps.c:154:15: warning: 'navFix' defined but not used [-Wunused-variable]
-  154 | static bool_t navFix;
-      |               ^~~~~~
-arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: prueba de uart.elf
- 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
-   text	   data	    bss	    dec	    hex	filename
-  34252	    468	   5632	  40352	   9da0	prueba de uart.elf
-Finished building: default.size.stdout
- 
-Finished building: prueba de uart.list
- 
-14:50:18 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-   text	   data	    bss	    dec	    hex	filename
-  34252	    468	   5632	  40352	   9da0	prueba de uart.elf
-Finished building: default.size.stdout
- 
-14:57:13 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-../Src/main.c:13: warning: "DEBUG" redefined
-   13 | #define DEBUG true
-      | 
-<command-line>: note: this is the location of the previous definition
-../Src/main.c: In function 'main':
-../Src/main.c:22:5: warning: implicit declaration of function 'gpsFSM_init' [-Wimplicit-function-declaration]
-   22 |     gpsFSM_init();
-      |     ^~~~~~~~~~~
-../Src/main.c:78:9: warning: implicit declaration of function 'gpsFSM_update' [-Wimplicit-function-declaration]
-   78 |         gpsFSM_update();
-      |         ^~~~~~~~~~~~~
-../Src/main.c:86:42: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-   86 |                                 nmeaData = Get_NMEA_Data();
-      |                                          ^
-In file included from ../Src/main.c:4:
-/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h: At top level:
-/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h:14:13: warning: 'I2C1_GPIO_Init' declared 'static' but never defined [-Wunused-function]
-   14 | static void I2C1_GPIO_Init();
-      |             ^~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: prueba de uart.elf
- 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
-   text	   data	    bss	    dec	    hex	filename
-  34412	    468	   5632	  40512	   9e40	prueba de uart.elf
-Finished building: default.size.stdout
- 
-Finished building: prueba de uart.list
- 
-15:00:53 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-   text	   data	    bss	    dec	    hex	filename
-  34412	    468	   5632	  40512	   9e40	prueba de uart.elf
-Finished building: default.size.stdout
- 
-15:08:41 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
-../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
-../Drivers/API/Src/API_gps.c:166:19: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-  166 |         stateData = Get_NMEA_Data();
-      |                   ^
-../Drivers/API/Src/API_gps.c:212:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
-  212 |                         Error_Handler();
-      |                         ^~~~~~~~~~~~~
-../Drivers/API/Src/API_gps.c: At top level:
-../Drivers/API/Src/API_gps.c:154:15: warning: 'navFix' defined but not used [-Wunused-variable]
-  154 | static bool_t navFix;
-      |               ^~~~~~
-arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: prueba de uart.elf
- 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
-   text	   data	    bss	    dec	    hex	filename
-  34380	    468	   5632	  40480	   9e20	prueba de uart.elf
-Finished building: default.size.stdout
- 
-Finished building: prueba de uart.list
- 
-15:09:23 **** Incremental Build of configuration Debug for project prueba de uart ****
-make -j4 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-../Src/main.c:13: warning: "DEBUG" redefined
-   13 | #define DEBUG true
-      | 
-<command-line>: note: this is the location of the previous definition
-../Src/main.c: In function 'main':
-../Src/main.c:22:5: warning: implicit declaration of function 'gpsFSM_init' [-Wimplicit-function-declaration]
-   22 |     gpsFSM_init();
-      |     ^~~~~~~~~~~
-../Src/main.c:77:9: warning: implicit declaration of function 'gpsFSM_update' [-Wimplicit-function-declaration]
-   77 |         gpsFSM_update();
-      |         ^~~~~~~~~~~~~
-../Src/main.c:85:42: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-   85 |                                 nmeaData = Get_NMEA_Data();
-      |                                          ^
-In file included from ../Src/main.c:4:
-/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h: At top level:
-/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h:14:13: warning: 'I2C1_GPIO_Init' declared 'static' but never defined [-Wunused-function]
-   14 | static void I2C1_GPIO_Init();
-      |             ^~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: prueba de uart.elf
- 
-arm-none-eabi-size  prueba\ de\ uart.elf 
-arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
-   text	   data	    bss	    dec	    hex	filename
-  34364	    468	   5632	  40464	   9e10	prueba de uart.elf
+  34292	    468	   5632	  40392	   9dc8	prueba de uart.elf
 Finished building: default.size.stdout
  
 Finished building: prueba de uart.list

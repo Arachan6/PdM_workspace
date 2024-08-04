@@ -186,6 +186,7 @@ void gpsFSM_update(){
 					HD44780_PrintStr("Processing Data");
 					HD44780_Cursor_Position(0, 1);
 					HD44780_PrintStr("State: NAV");
+					GPS_Start_Logging();
 				}
 			} else {
 				delayInit(&d1, VALID_FIX_TIME);
@@ -206,6 +207,7 @@ void gpsFSM_update(){
 				HD44780_PrintStr("Processing Data");
 				HD44780_Cursor_Position(0, 1);
 				HD44780_PrintStr("State: IDLE");
+				GPS_Stop_Logging();
 			}
 			break;
 		default:

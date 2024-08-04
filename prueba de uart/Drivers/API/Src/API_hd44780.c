@@ -1,4 +1,5 @@
 #include "API_hd44780.h"
+#include "API_hd44780_port.h"
 #include "API_uart.h"
 
 extern I2C_HandleTypeDef hi2c1;
@@ -119,14 +120,14 @@ static void SendCommand(uint8_t cmd){
 static void ExpanderWrite(uint8_t value)
 {
 	uint8_t data = value | dpBacklight;
-	HAL_I2C_Master_Transmit(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
+	I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
 
 	data = (value | ENABLE) | dpBacklight;
-	HAL_I2C_Master_Transmit(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
+	I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
 	DelayUS(20);
 
 	data = (value & ~ENABLE) | dpBacklight;
-	HAL_I2C_Master_Transmit(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
+	I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
 	DelayUS(20);
 }
 /*

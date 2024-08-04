@@ -10,7 +10,7 @@
 void SystemClock_Config(void);
 void Error_Handler(void);
 
-#define DEBUG true
+#define DEBUG false
 
 int main(void){
 

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;prueba de uart/Drivers/API/Inc/API_hd44780_port.c&apos;" deleteContents="false" description="Delete resource &apos;prueba de uart/Drivers/API/Inc/API_hd44780_port.c&apos;" element1="/prueba de uart/Drivers/API/Inc/API_hd44780_port.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1722795170074"/>
+</session>
