@@ -1,1 +1,2 @@
-../Drivers/API/Src/API_hd44780_port.c:11:19:I2C_Master_Transmit_Wrapper	1
+../Drivers/API/Src/API_hd44780_port.c:23:19:I2C_Master_Transmit_Wrapper	1
+../Drivers/API/Src/API_hd44780_port.c:36:6:HAL_Delay_Wrapper	1

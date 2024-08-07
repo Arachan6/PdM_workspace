@@ -4,65 +4,79 @@
 
 extern I2C_HandleTypeDef hi2c1;
 
-uint8_t dpFunction;
-uint8_t dpControl;
-uint8_t dpMode;
-uint8_t dpRows;
-uint8_t dpBacklight;
+uint8_t dpFunction;    /**< Display function setting */
+uint8_t dpControl;     /**< Display control setting */
+uint8_t dpMode;        /**< Display mode setting */
+uint8_t dpRows;        /**< Number of display rows */
+uint8_t dpBacklight;   /**< Display backlight setting */
 
-static void SendCommand(uint8_t);
-static void SendData(uint8_t);
-static void ExpanderWrite(uint8_t);
-static void DelayUS(uint32_t);
-static void SetCursor(uint8_t, uint8_t);
+static void SendCommand(uint8_t cmd);
+static void SendData(uint8_t data);
+static void ExpanderWrite(uint8_t value);
+static void DelayUS(uint32_t us);
+static void SetCursor(uint8_t col, uint8_t row);
 
+/**
+ * @brief Initialize the HD44780 display.
+ * @param rows Number of rows on the display.
+ */
 void HD44780_Init(uint8_t rows){
-	dpRows = rows;
-	dpBacklight = LCD_BACKLIGHT;
+    dpRows = rows;
+    dpBacklight = LCD_BACKLIGHT;
 
-	dpFunction = LCD_4BITMODE | LCD_2LINE | LCD_5x8DOTS;
+    dpFunction = LCD_4BITMODE | LCD_2LINE | LCD_5x8DOTS;
 
-	/* Wait for initialization */
-	HAL_Delay(1000);
+    /* Wait for initialization */
+    HAL_Delay_Wrapper(1000);
 
-	/* 4bit Mode */
-	ExpanderWrite(0x03 << 4);
-	HAL_Delay(5);
-	DelayUS(4500);
+    /* 4bit Mode */
+    ExpanderWrite(0x03 << 4);
+    HAL_Delay_Wrapper(5);
 
-	ExpanderWrite(0x03 << 4);
-	DelayUS(4500);
+    ExpanderWrite(0x03 << 4);
+    HAL_Delay_Wrapper(5);
 
-	ExpanderWrite(0x03 << 4);
-	DelayUS(4500);
+    ExpanderWrite(0x03 << 4);
+    HAL_Delay_Wrapper(5);
 
-	ExpanderWrite(0x02 << 4);
-	DelayUS(100);
+    ExpanderWrite(0x02 << 4);
+    HAL_Delay_Wrapper(1);
 
-	/* Display Control */
-	SendCommand(LCD_FUNCTIONSET | dpFunction);
+    /* Display Control */
+    SendCommand(LCD_FUNCTIONSET | dpFunction);
 
-	dpControl = LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKON;
-	HD44780_Set_Display(true);
-	HD44780_Clear();
+    dpControl = LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKON;
+    HD44780_Set_Display(true);
+    HD44780_Clear();
 
-	/* Display Mode */
-	dpMode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
-	SendCommand(LCD_ENTRYMODESET | dpMode);
-	DelayUS(4500);
+    /* Display Mode */
+    dpMode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
+    SendCommand(LCD_ENTRYMODESET | dpMode);
+    HAL_Delay_Wrapper(5);
 
-	HD44780_Home();
+    HD44780_Home();
 }
 
+/**
+ * @brief Set the display to home position.
+ */
 void HD44780_Home(){
-	SendCommand(LCD_RETURNHOME);
-	DelayUS(2000);
+    SendCommand(LCD_RETURNHOME);
+    HAL_Delay_Wrapper(2);
 }
 
+/**
+ * @brief Print a string on the display.
+ * @param c String to be printed.
+ */
 void HD44780_PrintStr(const char c[]){
-	while(*c) SendData(*c++);
+    while(*c) SendData(*c++);
 }
 
+/**
+ * @brief Set the display on or off.
+ * @param displayOn Boolean indicating display on (true) or off (false).
+ */
 void HD44780_Set_Display(bool_t displayOn) {
     if (displayOn) {
         dpControl |= LCD_DISPLAYON;  // Set the display on flag
@@ -72,6 +86,10 @@ void HD44780_Set_Display(bool_t displayOn) {
     SendCommand(LCD_DISPLAYCONTROL | dpControl); // Send the command to the display
 }
 
+/**
+ * @brief Set the blink mode on or off.
+ * @param blinkOn Boolean indicating blink on (true) or off (false).
+ */
 void HD44780_Set_Blink(bool_t blinkOn) {
     if (blinkOn) {
         dpControl |= LCD_BLINKON;  // Set the blink on flag
@@ -81,6 +99,10 @@ void HD44780_Set_Blink(bool_t blinkOn) {
     SendCommand(LCD_DISPLAYCONTROL | dpControl); // Send the command to the display
 }
 
+/**
+ * @brief Set the cursor mode on or off.
+ * @param cursorOn Boolean indicating cursor on (true) or off (false).
+ */
 void HD44780_Set_Cursor(bool_t cursorOn) {
     if (cursorOn) {
         dpControl |= LCD_CURSORON;  // Set the cursor on flag
@@ -90,85 +112,63 @@ void HD44780_Set_Cursor(bool_t cursorOn) {
     SendCommand(LCD_DISPLAYCONTROL | dpControl); // Send the command to the display
 }
 
+/**
+ * @brief Set the cursor position on the display.
+ * @param col Column position.
+ * @param row Row position.
+ */
 void HD44780_Cursor_Position(uint8_t col, uint8_t row){
-	int row_offsets[] = { 0x00, 0x40, 0x14, 0x54 };
-	if (row >= dpRows){
-		row = dpRows-1;
-	}
-	SendCommand(LCD_SETDDRAMADDR | (col + row_offsets[row]));
+    int row_offsets[] = { 0x00, 0x40, 0x14, 0x54 };
+    if (row >= dpRows){
+        row = dpRows-1;
+    }
+    SendCommand(LCD_SETDDRAMADDR | (col + row_offsets[row]));
 }
 
+/**
+ * @brief Clear the display.
+ */
 void HD44780_Clear(){
-	SendCommand(LCD_CLEARDISPLAY);
-	DelayUS(2000);
+    SendCommand(LCD_CLEARDISPLAY);
+    HAL_Delay_Wrapper(2);
 }
 
-static void SendData(uint8_t cmd){
-	uint8_t highnib = cmd & 0xF0;
-	uint8_t lownib = (cmd<<4) & 0xF0;
-	ExpanderWrite(highnib | RS);
-	ExpanderWrite(lownib | RS);
+/**
+ * @brief Send data to the display.
+ * @param data Data to be sent.
+ */
+static void SendData(uint8_t data){
+    uint8_t highnib = data & 0xF0;
+    uint8_t lownib = (data << 4) & 0xF0;
+    ExpanderWrite(highnib | RS);
+    ExpanderWrite(lownib | RS);
 }
 
+/**
+ * @brief Send a command to the display.
+ * @param cmd Command to be sent.
+ */
 static void SendCommand(uint8_t cmd){
-	uint8_t highnib = cmd & 0xF0;
-	uint8_t lownib = (cmd<<4) & 0xF0;
-	ExpanderWrite(highnib);
-	ExpanderWrite(lownib);
+    uint8_t highnib = cmd & 0xF0;
+    uint8_t lownib = (cmd << 4) & 0xF0;
+    ExpanderWrite(highnib);
+    ExpanderWrite(lownib);
 }
 
+/**
+ * @brief Write a value to the I2C expander.
+ * @param value Value to be written.
+ */
 static void ExpanderWrite(uint8_t value)
 {
-	uint8_t data = value | dpBacklight;
-	I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
+    uint8_t data = value | dpBacklight;
+    I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
 
-	data = (value | ENABLE) | dpBacklight;
-	I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
-	DelayUS(20);
+    data = (value | ENABLE) | dpBacklight;
+    I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
+    HAL_Delay_Wrapper(1);
 
-	data = (value & ~ENABLE) | dpBacklight;
-	I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
-	DelayUS(20);
-}
-/*
-static void DelayUS(uint32_t us) {
-	uint32_t cycles = (SystemCoreClock/1000000L)*us;
-	uint32_t start = DWT->CYCCNT;
-	volatile uint32_t cnt;
-
-	do{
-		cnt = DWT->CYCCNT - start;
-	} while(cnt < cycles);
-}
-
-*/
-
-
-void DWT_Init(void) {
-    // Enable the DWT (Data Watchpoint and Trace) clock
-    if (!(CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk)) {
-        CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; // Enable Trace and Debug
-    }
-    DWT->CYCCNT = 0; // Reset the cycle counter
-    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk; // Enable the cycle counter
-}
-
-uint32_t DWT_GetMicroseconds(void) {
-    // Get the current count from the cycle counter
-    uint32_t cycles = DWT->CYCCNT;
-
-    // Convert cycles to microseconds
-    return (cycles / (SystemCoreClock / 1000000)); // SystemCoreClock is the system clock frequency in Hz
-}
-
-void delayMicroseconds(uint32_t us) {
-    uint32_t start = DWT_GetMicroseconds();
-    while (DWT_GetMicroseconds() - start < us) {
-        // Busy-wait for the desired number of microseconds
-    }
-}
-
-static void DelayUS(uint32_t us) {
-	DWT_Init();
-	delayMicroseconds(us);
+    data = (value & ~ENABLE) | dpBacklight;
+    I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);
+    HAL_Delay_Wrapper(1);
 }

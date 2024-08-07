@@ -10,7 +10,7 @@
 void SystemClock_Config(void);
 void Error_Handler(void);
 
-#define DEBUG false
+#define DEBUG true
 
 int main(void){
 
@@ -29,7 +29,7 @@ int main(void){
 	HD44780_Cursor_Position(0, 0);
 	HD44780_PrintStr("LCD Initialized!");
 
-	HAL_Delay(500);
+	HAL_Delay_Wrapper(500);
 	HD44780_Clear();
 	HD44780_Cursor_Position(0, 0);
 	if (UART5_Init()){
@@ -41,7 +41,7 @@ int main(void){
 		Error_Handler();
 	}
 
-	HAL_Delay(500);
+	HAL_Delay_Wrapper(500);
 	HD44780_Clear();
 	HD44780_Cursor_Position(0, 0);
     if (USART2_Init()){
@@ -53,22 +53,24 @@ int main(void){
     	Error_Handler();
     }
 
-    HAL_Delay(500);
+    HAL_Delay_Wrapper(500);
 	HD44780_Clear();
 	HD44780_Cursor_Position(0, 0);
 	HD44780_PrintStr("Configuring GPS");
+
+	HAL_Delay_Wrapper(500);
 	GPS_Configure_Init();
 	HD44780_Clear();
 	HD44780_Cursor_Position(0, 0);
 	HD44780_PrintStr("GPS Configured!");
 
-	HAL_Delay(500);
+	HAL_Delay_Wrapper(500);
 	HD44780_Clear();
 	HD44780_Cursor_Position(0, 0);
 	HD44780_PrintStr("Processing Data");
 	HD44780_Cursor_Position(0, 1);
 	HD44780_PrintStr("State: IDLE");
-	HAL_Delay(500);
+	HAL_Delay_Wrapper(500);
 
     while (1){
     	gpsFSM_update();

@@ -12,11 +12,11 @@
 
 #define VALID_BUTTON_TIME 40
 
-void debounceFSM_init();		// debe cargar el estado inicial
-void debounceFSM_update();	    // debe leer las entradas, resolver la lógica de
-					            // transición de estados y actualizar las salidas
-void buttonPressed();			// debe encender el LED
-void buttonReleased();		    // debe apagar el LED
+void debounceFSM_init();
+void debounceFSM_update();
+
+void buttonPressed();
+void buttonReleased();
 
 bool_t readKey();
 

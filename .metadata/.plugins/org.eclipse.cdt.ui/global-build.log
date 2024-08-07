@@ -58,3 +58,386 @@ Finished building: default.size.stdout
  
 Finished building: prueba de uart.list
  
+19:11:46 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Drivers/API/Src/API_debounce.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_debounce.d" -MT"Drivers/API/Src/API_debounce.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_debounce.o"
+../Drivers/API/Src/API_debounce.c: In function 'debounceFSM_update':
+../Drivers/API/Src/API_debounce.c:78:13: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
+   78 |             Error_Handler();
+      |             ^~~~~~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34292	    468	   5632	  40392	   9dc8	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+20:06:47 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t, uint8_t);
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34276	    468	   5632	  40376	   9db8	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+20:07:14 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t, uint8_t);
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34276	    468	   5632	  40376	   9db8	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+20:10:15 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+../Drivers/API/Src/API_hd44780.c: In function 'HD44780_Init':
+../Drivers/API/Src/API_hd44780.c:26:9: warning: implicit declaration of function 'HAL_Delay_Wrapper' [-Wimplicit-function-declaration]
+   26 |         HAL_Delay_Wrapper(1000);
+      |         ^~~~~~~~~~~~~~~~~
+../Drivers/API/Src/API_hd44780.c: At top level:
+../Drivers/API/Src/API_hd44780.c:16:13: warning: 'DelayUS' used but never defined
+   16 | static void DelayUS(uint32_t);
+      |             ^~~~~~~
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t, uint8_t);
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: ./Drivers/API/Src/API_hd44780.o: in function `HD44780_Init':
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:26: undefined reference to `HAL_Delay_Wrapper'
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: /home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:30: undefined reference to `HAL_Delay_Wrapper'
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: /home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:34: undefined reference to `HAL_Delay_Wrapper'
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: /home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:38: undefined reference to `HAL_Delay_Wrapper'
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: /home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:42: undefined reference to `HAL_Delay_Wrapper'
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: ./Drivers/API/Src/API_hd44780.o:/home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:55: more undefined references to `HAL_Delay_Wrapper' follow
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: ./Drivers/API/Src/API_hd44780.o: in function `HD44780_Home':
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:62: undefined reference to `DelayUS'
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: ./Drivers/API/Src/API_hd44780.o: in function `HD44780_Clear':
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:106: undefined reference to `HAL_Delay_Wrapper'
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: ./Drivers/API/Src/API_hd44780.o: in function `ExpanderWrite':
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:130: undefined reference to `HAL_Delay_Wrapper'
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: /home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:134: undefined reference to `HAL_Delay_Wrapper'
+collect2: error: ld returned 1 exit status
+make: *** [makefile:69: prueba de uart.elf] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+20:11:15 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780_port.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780_port.d" -MT"Drivers/API/Src/API_hd44780_port.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780_port.o"
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: ./Drivers/API/Src/API_hd44780.o: in function `HD44780_Home':
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:62: undefined reference to `DelayUS'
+collect2: error: ld returned 1 exit status
+make: *** [makefile:69: prueba de uart.elf] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+20:11:36 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780_port.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780_port.d" -MT"Drivers/API/Src/API_hd44780_port.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780_port.o"
+../Drivers/API/Src/API_hd44780.c:16:13: warning: 'DelayUS' used but never defined
+   16 | static void DelayUS(uint32_t);
+      |             ^~~~~~~
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t, uint8_t);
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+/opt/st/stm32cubeide_1.15.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: ./Drivers/API/Src/API_hd44780.o: in function `HD44780_Home':
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Debug/../Drivers/API/Src/API_hd44780.c:62: undefined reference to `DelayUS'
+collect2: error: ld returned 1 exit status
+make: *** [makefile:69: prueba de uart.elf] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+20:11:57 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+../Drivers/API/Src/API_hd44780.c:16:13: warning: 'DelayUS' declared 'static' but never defined [-Wunused-function]
+   16 | static void DelayUS(uint32_t);
+      |             ^~~~~~~
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t, uint8_t);
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34108	    468	   5632	  40208	   9d10	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+20:15:17 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+../Drivers/API/Src/API_hd44780.c:16:13: warning: 'DelayUS' declared 'static' but never defined [-Wunused-function]
+   16 | static void DelayUS(uint32_t);
+      |             ^~~~~~~
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t, uint8_t);
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34108	    468	   5632	  40208	   9d10	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+20:16:32 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+../Src/main.c:13: warning: "DEBUG" redefined
+   13 | #define DEBUG false
+      | 
+<command-line>: note: this is the location of the previous definition
+../Src/main.c: In function 'main':
+../Src/main.c:22:5: warning: implicit declaration of function 'gpsFSM_init' [-Wimplicit-function-declaration]
+   22 |     gpsFSM_init();
+      |     ^~~~~~~~~~~
+../Src/main.c:76:9: warning: implicit declaration of function 'gpsFSM_update' [-Wimplicit-function-declaration]
+   76 |         gpsFSM_update();
+      |         ^~~~~~~~~~~~~
+../Src/main.c:84:42: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   84 |                                 nmeaData = Get_NMEA_Data();
+      |                                          ^
+../Src/main.c:17:19: warning: variable 'nmeaData' set but not used [-Wunused-but-set-variable]
+   17 |         NMEAData* nmeaData;
+      |                   ^~~~~~~~
+In file included from ../Src/main.c:4:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h: At top level:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h:14:13: warning: 'I2C1_GPIO_Init' declared 'static' but never defined [-Wunused-function]
+   14 | static void I2C1_GPIO_Init();
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34116	    468	   5632	  40216	   9d18	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+20:17:25 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+../Src/main.c:13: warning: "DEBUG" redefined
+   13 | #define DEBUG true
+      | 
+<command-line>: note: this is the location of the previous definition
+../Src/main.c: In function 'main':
+../Src/main.c:22:5: warning: implicit declaration of function 'gpsFSM_init' [-Wimplicit-function-declaration]
+   22 |     gpsFSM_init();
+      |     ^~~~~~~~~~~
+../Src/main.c:76:9: warning: implicit declaration of function 'gpsFSM_update' [-Wimplicit-function-declaration]
+   76 |         gpsFSM_update();
+      |         ^~~~~~~~~~~~~
+../Src/main.c:84:42: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   84 |                                 nmeaData = Get_NMEA_Data();
+      |                                          ^
+In file included from ../Src/main.c:4:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h: At top level:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h:14:13: warning: 'I2C1_GPIO_Init' declared 'static' but never defined [-Wunused-function]
+   14 | static void I2C1_GPIO_Init();
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34268	    468	   5632	  40368	   9db0	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+20:33:53 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Drivers/API/Src/API_delay.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_delay.d" -MT"Drivers/API/Src/API_delay.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_delay.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
+../Drivers/API/Src/API_gps.c:240:15: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  240 |     stateData = Get_NMEA_Data();
+      |               ^
+../Drivers/API/Src/API_hd44780.c:16:13: warning: 'DelayUS' declared 'static' but never defined [-Wunused-function]
+   16 | static void DelayUS(uint32_t us);
+      |             ^~~~~~~
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t col, uint8_t row);
+      |             ^~~~~~~~~
+../Drivers/API/Src/API_gps.c:288:13: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
+  288 |             Error_Handler();
+      |             ^~~~~~~~~~~~~
+../Drivers/API/Src/API_gps.c: At top level:
+../Drivers/API/Src/API_gps.c:30:15: warning: 'navFix' defined but not used [-Wunused-variable]
+   30 | static bool_t navFix;         /**< Navigation fix status */
+      |               ^~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34268	    468	   5632	  40368	   9db0	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+20:47:32 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/utils.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/utils.d" -MT"Src/utils.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/utils.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_debounce.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_debounce.d" -MT"Drivers/API/Src/API_debounce.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_debounce.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_delay.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_delay.d" -MT"Drivers/API/Src/API_delay.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_delay.o"
+../Src/main.c:13: warning: "DEBUG" redefined
+   13 | #define DEBUG true
+      | 
+<command-line>: note: this is the location of the previous definition
+../Src/main.c: In function 'main':
+../Src/main.c:22:5: warning: implicit declaration of function 'gpsFSM_init' [-Wimplicit-function-declaration]
+   22 |     gpsFSM_init();
+      |     ^~~~~~~~~~~
+../Src/utils.c: In function 'String_Split':
+../Src/utils.c:70:18: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+   70 |     int length = strlen(str);
+      |                  ^~~~~~
+../Drivers/API/Src/API_debounce.c: In function 'debounceFSM_update':
+../Drivers/API/Src/API_debounce.c:78:13: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
+   78 |             Error_Handler();
+      |             ^~~~~~~~~~~~~
+../Src/utils.c:10:1: note: include '<string.h>' or provide a declaration of 'strlen'
+    9 | #include "utils.h"
+  +++ |+#include <string.h>
+   10 | 
+../Src/utils.c:70:18: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+   70 |     int length = strlen(str);
+      |                  ^~~~~~
+../Src/utils.c:70:18: note: include '<string.h>' or provide a declaration of 'strlen'
+../Src/main.c:76:9: warning: implicit declaration of function 'gpsFSM_update' [-Wimplicit-function-declaration]
+   76 |         gpsFSM_update();
+      |         ^~~~~~~~~~~~~
+../Src/main.c:84:42: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   84 |                                 nmeaData = Get_NMEA_Data();
+      |                                          ^
+In file included from ../Src/main.c:4:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h: At top level:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h:14:13: warning: 'I2C1_GPIO_Init' declared 'static' but never defined [-Wunused-function]
+   14 | static void I2C1_GPIO_Init();
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780.d" -MT"Drivers/API/Src/API_hd44780.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_hd44780_port.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_hd44780_port.d" -MT"Drivers/API/Src/API_hd44780_port.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_hd44780_port.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_i2c.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_i2c.d" -MT"Drivers/API/Src/API_i2c.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_i2c.o"
+../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
+../Drivers/API/Src/API_gps.c:240:15: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  240 |     stateData = Get_NMEA_Data();
+      |               ^
+../Drivers/API/Src/API_hd44780.c:16:13: warning: 'DelayUS' declared 'static' but never defined [-Wunused-function]
+   16 | static void DelayUS(uint32_t us);
+      |             ^~~~~~~
+../Drivers/API/Src/API_hd44780.c:17:13: warning: 'SetCursor' declared 'static' but never defined [-Wunused-function]
+   17 | static void SetCursor(uint8_t col, uint8_t row);
+      |             ^~~~~~~~~
+../Drivers/API/Src/API_gps.c:288:13: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
+  288 |             Error_Handler();
+      |             ^~~~~~~~~~~~~
+../Drivers/API/Src/API_gps.c: At top level:
+../Drivers/API/Src/API_gps.c:30:15: warning: 'navFix' defined but not used [-Wunused-variable]
+   30 | static bool_t navFix;         /**< Navigation fix status */
+      |               ^~~~~~
+arm-none-eabi-gcc "../Drivers/API/Src/API_pc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_pc.d" -MT"Drivers/API/Src/API_pc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_pc.o"
+arm-none-eabi-gcc "../Drivers/API/Src/API_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_uart.d" -MT"Drivers/API/Src/API_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_uart.o"
+../Drivers/API/Src/API_pc.c: In function 'Process_PC_Command':
+../Drivers/API/Src/API_pc.c:24:9: warning: implicit declaration of function 'String_Compare' [-Wimplicit-function-declaration]
+   24 |     if (String_Compare(pc_command, "$DUMP\n\r") == 1) {
+      |         ^~~~~~~~~~~~~~
+../Drivers/API/Src/API_uart.c: In function 'UART5_Send_String':
+../Drivers/API/Src/API_uart.c:166:51: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+  166 |     HAL_UART_Transmit(&huart5, (uint8_t*)pstring, strlen((const char*)pstring), UART_MAX_TIMEOUT);
+      |                                                   ^~~~~~
+../Drivers/API/Src/API_uart.c:11:1: note: include '<string.h>' or provide a declaration of 'strlen'
+   10 | #include "main.h"
+  +++ |+#include <string.h>
+   11 | 
+../Drivers/API/Src/API_uart.c:166:51: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+  166 |     HAL_UART_Transmit(&huart5, (uint8_t*)pstring, strlen((const char*)pstring), UART_MAX_TIMEOUT);
+      |                                                   ^~~~~~
+../Drivers/API/Src/API_uart.c:166:51: note: include '<string.h>' or provide a declaration of 'strlen'
+../Drivers/API/Src/API_uart.c: In function 'USART2_Send_String':
+../Drivers/API/Src/API_uart.c:174:51: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+  174 |     HAL_UART_Transmit(&huart2, (uint8_t*)pstring, strlen((const char*)pstring), UART_MAX_TIMEOUT);
+      |                                                   ^~~~~~
+../Drivers/API/Src/API_uart.c:174:51: note: include '<string.h>' or provide a declaration of 'strlen'
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34268	    468	   5632	  40368	   9db0	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 
+21:10:46 **** Incremental Build of configuration Debug for project prueba de uart ****
+make -j4 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+../Src/main.c:13: warning: "DEBUG" redefined
+   13 | #define DEBUG true
+      | 
+<command-line>: note: this is the location of the previous definition
+../Src/main.c: In function 'main':
+../Src/main.c:22:5: warning: implicit declaration of function 'gpsFSM_init' [-Wimplicit-function-declaration]
+   22 |     gpsFSM_init();
+      |     ^~~~~~~~~~~
+../Src/main.c:32:9: warning: implicit declaration of function 'HAL_Delay_Wrapper' [-Wimplicit-function-declaration]
+   32 |         HAL_Delay_Wrapper(500);
+      |         ^~~~~~~~~~~~~~~~~
+../Src/main.c:76:9: warning: implicit declaration of function 'gpsFSM_update' [-Wimplicit-function-declaration]
+   76 |         gpsFSM_update();
+      |         ^~~~~~~~~~~~~
+../Src/main.c:84:42: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   84 |                                 nmeaData = Get_NMEA_Data();
+      |                                          ^
+In file included from ../Src/main.c:4:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h: At top level:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h:14:13: warning: 'I2C1_GPIO_Init' declared 'static' but never defined [-Wunused-function]
+   14 | static void I2C1_GPIO_Init();
+      |             ^~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: prueba de uart.elf
+ 
+arm-none-eabi-size  prueba\ de\ uart.elf 
+arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
+   text	   data	    bss	    dec	    hex	filename
+  34268	    468	   5632	  40368	   9db0	prueba de uart.elf
+Finished building: default.size.stdout
+ 
+Finished building: prueba de uart.list
+ 

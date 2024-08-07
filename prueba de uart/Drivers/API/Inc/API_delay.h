@@ -23,25 +23,9 @@ typedef struct{
 	bool_t running;
 } delay_t;
 
-/**
- * @brief Initialize delay structure.
- * @param delay Pointer to delay structure to be initialized.
- * @param duration Duration of the delay in ticks.
- */
+
 void delayInit(delay_t* delay, tick_t duration);
-
-/**
- * @brief Checks if the delay is running and starts the timer if not.
- * @param delay Pointer to the delay structure.
- * @retval TRUE if time elapsed, FALSE if not.
- */
 bool_t delayRead(delay_t* delay);
-
-/**
- * @brief Sets the duration of the delay.
- * @param delay Pointer to the delay structure.
- * @param duration Duration of the delay in ticks.
- */
 void delayWrite(delay_t* delay, tick_t  duration);
 
 #endif /* API_INC_API_DELAY_H_ */

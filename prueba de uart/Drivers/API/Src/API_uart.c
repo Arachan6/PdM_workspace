@@ -16,10 +16,10 @@
 #define NMEA_QUEUE_SIZE 10 // Maximum number of NMEA messages to store
 
 typedef struct {
-    uint8_t buffer[NMEA_QUEUE_SIZE][NMEA_BUFFER_SIZE];
-    uint8_t head; // Index of the next message to be dequeued
-    uint8_t tail; // Index of the next message to be enqueued
-    uint8_t count; // Number of messages currently in the queue
+    uint8_t buffer[NMEA_QUEUE_SIZE][NMEA_BUFFER_SIZE]; /**< Buffer to store NMEA messages */
+    uint8_t head; /**< Index of the next message to be dequeued */
+    uint8_t tail; /**< Index of the next message to be enqueued */
+    uint8_t count; /**< Number of messages currently in the queue */
 } NMEA_Queue;
 
 NMEA_Queue nmea_queue = { .head = 0, .tail = 0, .count = 0 };
@@ -31,6 +31,9 @@ uint8_t rx_char_gps;
 uint8_t rx_char_pc;
 bool_t nmea_available;
 
+/**
+ * @brief Initialize GPIO for UART5.
+ */
 static void UART5_GPIO_Init(void){
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -55,6 +58,9 @@ static void UART5_GPIO_Init(void){
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 }
 
+/**
+ * @brief Initialize GPIO for USART2.
+ */
 static void USART2_GPIO_Init(void){
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -67,8 +73,8 @@ static void USART2_GPIO_Init(void){
     /* Configure PD5 for USART2 TX */
     GPIO_InitStruct.Pin = GPIO_PIN_5;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
@@ -77,10 +83,14 @@ static void USART2_GPIO_Init(void){
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 }
 
+/**
+ * @brief Initialize UART5 with default parameters.
+ * @retval true if initialization is successful, false otherwise.
+ */
 bool_t UART5_Init(void){
-	UART5_GPIO_Init();
+    UART5_GPIO_Init();
 
-	bool_t rtrn=true;
+    bool_t rtrn = true;
 
     huart5.Instance = UART5;
     huart5.Init.BaudRate = 9600;
@@ -90,24 +100,28 @@ bool_t UART5_Init(void){
     huart5.Init.Mode = UART_MODE_TX_RX;
     huart5.Init.HwFlowCtl = UART_HWCONTROL_NONE;
     huart5.Init.OverSampling = UART_OVERSAMPLING_16;
-    if (HAL_UART_Init(&huart5) != HAL_OK){rtrn=false;}
+    if (HAL_UART_Init(&huart5) != HAL_OK) { rtrn = false; }
 
-    // Habilitar interrupciones de UART5
-	HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
-	HAL_NVIC_EnableIRQ(UART5_IRQn);
-	HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char_gps, 1);
+    // Enable UART5 interrupts
+    HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(UART5_IRQn);
+    HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char_gps, 1);
 
-	return rtrn;
+    return rtrn;
 }
 
+/**
+ * @brief Initialize USART2 with default parameters.
+ * @retval true if initialization is successful, false otherwise.
+ */
 bool_t USART2_Init(void){
-	USART2_GPIO_Init();
+    USART2_GPIO_Init();
 
-	bool_t rtrn=true;
-	char baudRate[10]={};
-	char wordLength[10]={};
-	char stopBits[10]={};
-	char parityBits[10]={};
+    bool_t rtrn = true;
+    char baudRate[10] = {};
+    char wordLength[10] = {};
+    char stopBits[10] = {};
+    char parityBits[10] = {};
 
     huart2.Instance = USART2;
     huart2.Init.BaudRate = 115200;
@@ -117,68 +131,80 @@ bool_t USART2_Init(void){
     huart2.Init.Mode = UART_MODE_TX_RX;
     huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
     huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-    if (HAL_UART_Init(&huart2) != HAL_OK){rtrn=false;}
+    if (HAL_UART_Init(&huart2) != HAL_OK) { rtrn = false; }
 
-    // Habilitar interrupciones de USART2
-	HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
-	HAL_NVIC_EnableIRQ(USART2_IRQn);
-	HAL_UART_Receive_IT(&huart2, (uint8_t *)&rx_char_pc, 1);
+    // Enable USART2 interrupts
+    HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(USART2_IRQn);
+    HAL_UART_Receive_IT(&huart2, (uint8_t *)&rx_char_pc, 1);
 
-    sprintf(baudRate, "%d",(int)huart2.Init.BaudRate);
-	sprintf(wordLength, "%d",(int)huart2.Init.WordLength);
-	sprintf(stopBits, "%d",(int)huart2.Init.StopBits);
-	sprintf(parityBits, "%d",(int)huart2.Init.Parity);
+    sprintf(baudRate, "%d", (int)huart2.Init.BaudRate);
+    sprintf(wordLength, "%d", (int)huart2.Init.WordLength);
+    sprintf(stopBits, "%d", (int)huart2.Init.StopBits);
+    sprintf(parityBits, "%d", (int)huart2.Init.Parity);
 
-	USART2_Send_String((uint8_t*)"Uart Inicializada correctamente\n\r");
-	USART2_Send_String((uint8_t*)"-----Parametros Configurados-----\n\r");
-	USART2_Send_String((uint8_t*)"\n\rBaud rate: ");
-	USART2_Send_String((uint8_t*)baudRate);
-	USART2_Send_String((uint8_t*)"\n\rWord Length: ");
-	USART2_Send_String((uint8_t*)wordLength);
-	USART2_Send_String((uint8_t*)"\n\rStop Bits: ");
-	USART2_Send_String((uint8_t*)stopBits);
-	USART2_Send_String((uint8_t*)"\n\rParity: ");
-	USART2_Send_String((uint8_t*)parityBits);
-	USART2_Send_String((uint8_t*)"\n\r");
+    USART2_Send_String((uint8_t*)"Uart Inicializada correctamente\n\r");
+    USART2_Send_String((uint8_t*)"-----Parametros Configurados-----\n\r");
+    USART2_Send_String((uint8_t*)"\n\rBaud rate: ");
+    USART2_Send_String((uint8_t*)baudRate);
+    USART2_Send_String((uint8_t*)"\n\rWord Length: ");
+    USART2_Send_String((uint8_t*)wordLength);
+    USART2_Send_String((uint8_t*)"\n\rStop Bits: ");
+    USART2_Send_String((uint8_t*)stopBits);
+    USART2_Send_String((uint8_t*)"\n\rParity: ");
+    USART2_Send_String((uint8_t*)parityBits);
+    USART2_Send_String((uint8_t*)"\n\r");
 
-	return rtrn;
+    return rtrn;
 }
 
+/**
+ * @brief Transmit a string via UART5.
+ * @param pstring Pointer to the string to transmit.
+ */
 void UART5_Send_String(uint8_t * pstring){
-	HAL_UART_Transmit(&huart5,(uint8_t*) pstring, strlen((const char*) pstring), UART_MAX_TIMEOUT);
+    HAL_UART_Transmit(&huart5, (uint8_t*)pstring, strlen((const char*)pstring), UART_MAX_TIMEOUT);
 }
 
+/**
+ * @brief Transmit a string via USART2.
+ * @param pstring Pointer to the string to transmit.
+ */
 void USART2_Send_String(uint8_t * pstring){
-	HAL_UART_Transmit(&huart2,(uint8_t*) pstring, strlen((const char*) pstring), UART_MAX_TIMEOUT);
+    HAL_UART_Transmit(&huart2, (uint8_t*)pstring, strlen((const char*)pstring), UART_MAX_TIMEOUT);
 }
 
+/**
+ * @brief Receive a character via UART5.
+ * @param pchar Pointer to store the received character.
+ * @retval HAL status.
+ */
 HAL_StatusTypeDef UART5_Receive_Char(uint8_t *pchar) {
     HAL_StatusTypeDef stts = HAL_UART_Receive(&huart5, pchar, 1, UART_MAX_TIMEOUT);
     return stts;
 }
 
+/**
+ * @brief Receive a character via USART2.
+ * @param pchar Pointer to store the received character.
+ * @retval HAL status.
+ */
 HAL_StatusTypeDef USART2_Receive_Char(uint8_t *pchar) {
     HAL_StatusTypeDef stts = HAL_UART_Receive(&huart2, pchar, 1, UART_MAX_TIMEOUT);
     return stts;
 }
 
-// La función UART5_IRQHandler es la rutina de servicio de interrupción (ISR)
-// que se llama automáticamente cuando ocurre una interrupción asociada al UART5.
+/**
+ * @brief UART5 IRQ handler.
+ */
 void UART5_IRQHandler(void) {
-
-	// La función HAL_UART_IRQHandler es parte de la HAL.
-	// Se encarga de identificar qué tipo de evento de interrupción ocurrió.
-	// Dependiendo del tipo, llamará a la función de callback correspondiente.
     HAL_UART_IRQHandler(&huart5);
 }
 
-// La función USART2_IRQHandler es la rutina de servicio de interrupción (ISR)
-// que se llama automáticamente cuando ocurre una interrupción asociada al USART2.
+/**
+ * @brief USART2 IRQ handler.
+ */
 void USART2_IRQHandler(void) {
-
-	// La función HAL_UART_IRQHandler es parte de la HAL.
-	// Se encarga de identificar qué tipo de evento de interrupción ocurrió.
-	// Dependiendo del tipo, llamará a la función de callback correspondiente.
     HAL_UART_IRQHandler(&huart2);
 }
 
@@ -191,6 +217,10 @@ uint8_t pc_index = 0;
 bool_t pc_ready = false;
 bool_t receiving_data = false;
 
+/**
+ * @brief UART receive complete callback function.
+ * @param huart Pointer to the UART handle.
+ */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == UART5) {
         if (rx_char_gps == '$') {
@@ -211,7 +241,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
         }
         nmea_incoming_buffer[nmea_index++] = rx_char_gps;
         // Continue receiving the next character
-		HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char_gps, 1);
+        HAL_UART_Receive_IT(&huart5, (uint8_t *)&rx_char_gps, 1);
 
     } else if (huart->Instance == USART2) {
         if (rx_char_pc == '$') {
@@ -240,24 +270,40 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     }
 }
 
+/**
+ * @brief Check if a PC command has been received.
+ * @retval true if a command is ready, false otherwise.
+ */
 bool_t pc_command_received(void){
-	bool_t rtrn = false;
-	if (pc_ready==true){
-		rtrn=true;
-		pc_ready=false;
-	}
-	return rtrn;
+    bool_t rtrn = false;
+    if (pc_ready == true){
+        rtrn = true;
+        pc_ready = false;
+    }
+    return rtrn;
 }
 
+/**
+ * @brief Get the last received PC command.
+ * @retval Pointer to the PC command string.
+ */
 char* get_pc_command(void) {
     return (char*) pc_ready_buffer;
 }
 
+/**
+ * @brief Check if an NMEA sentence is available.
+ * @retval true if an NMEA sentence is available, false otherwise.
+ */
 bool_t nmea_sentence_received(void) {
     return nmea_queue.count > 0;
 }
 
-
+/**
+ * @brief Enqueue an NMEA message.
+ * @param message Pointer to the message to enqueue.
+ * @retval true if the message was successfully enqueued, false if the queue is full.
+ */
 bool_t enqueue_nmea_message(const uint8_t* message) {
     if (nmea_queue.count < NMEA_QUEUE_SIZE) {
         // Manually copy the message to the queue buffer
@@ -271,6 +317,11 @@ bool_t enqueue_nmea_message(const uint8_t* message) {
     return false; // Queue is full
 }
 
+/**
+ * @brief Dequeue an NMEA message.
+ * @param message Pointer to store the dequeued message.
+ * @retval true if the message was successfully dequeued, false if the queue is empty.
+ */
 bool_t dequeue_nmea_message(uint8_t* message) {
     if (nmea_queue.count > 0) {
         // Manually copy the message from the queue buffer
@@ -284,6 +335,10 @@ bool_t dequeue_nmea_message(uint8_t* message) {
     return false; // Queue is empty
 }
 
+/**
+ * @brief Get the next NMEA sentence.
+ * @retval Pointer to the NMEA sentence string, or NULL if no message is available.
+ */
 char* get_nmea_sentence(void) {
     static uint8_t message[NMEA_BUFFER_SIZE];
     if (dequeue_nmea_message(message)) {
@@ -291,17 +346,3 @@ char* get_nmea_sentence(void) {
     }
     return NULL; // No message available
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

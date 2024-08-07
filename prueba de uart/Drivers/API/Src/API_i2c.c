@@ -11,10 +11,18 @@
 
 I2C_HandleTypeDef hi2c1;
 
+/**
+ * @brief Initializes I2C1 peripheral.
+ *
+ * This function configures the I2C1 peripheral and its GPIO pins,
+ * and checks if the I2C device is ready.
+ *
+ * @return true if initialization is successful, false otherwise.
+ */
 bool_t I2C1_Init(void)
 {
-	bool_t rtrn=true;
-	I2C1_GPIO_Init();
+    bool_t rtrn = true;
+    I2C1_GPIO_Init();
 
     hi2c1.Instance = I2C1;
     hi2c1.Init.ClockSpeed = 100000;
@@ -25,12 +33,18 @@ bool_t I2C1_Init(void)
     hi2c1.Init.OwnAddress2 = 0;
     hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
     hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-    if (HAL_I2C_Init(&hi2c1) != HAL_OK){rtrn=false;}
-    if (HAL_I2C_IsDeviceReady(&hi2c1, DEVICE_ADDR, 10, HAL_MAX_DELAY) != HAL_OK){rtrn=false;}
+    if (HAL_I2C_Init(&hi2c1) != HAL_OK) { rtrn = false; }
+    if (HAL_I2C_IsDeviceReady(&hi2c1, DEVICE_ADDR, 10, HAL_MAX_DELAY) != HAL_OK) { rtrn = false; }
 
     return rtrn;
 }
 
+/**
+ * @brief Initializes GPIO pins for I2C1.
+ *
+ * This function enables the necessary clocks and configures
+ * GPIO pins for the I2C1 peripheral.
+ */
 static void I2C1_GPIO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct;

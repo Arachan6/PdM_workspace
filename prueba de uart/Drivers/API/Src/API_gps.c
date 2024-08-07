@@ -5,7 +5,6 @@
  *      Author: felipe
  */
 
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -15,204 +14,278 @@
 #include "API_hd44780.h"
 #include "utils.h"
 
-NMEAData nmeaData;
+#define VALID_FIX_TIME 30000 /**< Time in milliseconds to wait for a valid GPS fix */
 
+NMEAData nmeaData; /**< Structure to hold parsed NMEA data */
+
+/**
+ * @brief GPS state machine states
+ */
+typedef enum{
+    STATE_IDLE,    /**< Idle state, waiting for a fix */
+    STATE_FIX,     /**< Fix state, valid fix acquired */
+    STATE_NAV,     /**< Navigation state, logging GPS data */
+} gpsState_t;
+
+static bool_t navFix;         /**< Navigation fix status */
+static gpsState_t gpsState;   /**< Current state of the GPS FSM */
+static delay_t d1;            /**< Delay structure for managing state transitions */
+
+/**
+ * @brief Parse a given NMEA sentence and update the NMEA data structure.
+ *
+ * This function parses the input NMEA sentence and updates the relevant fields
+ * in the NMEA data structure based on the sentence type.
+ *
+ * @param nmea Pointer to the NMEA sentence string.
+ * @return True if the parsing was successful, false otherwise.
+ */
 bool_t Parse_NMEA_Sentence(const char* nmea) {
-	bool_t rtrn = true;
+    bool_t rtrn = true;
     char fields[MAX_FIELDS][MAX_FIELDS_LENGTH];
     int fieldCount = 0;
     String_Split(nmea, ',', fields, &fieldCount);
 
-    if (fieldCount < 1) {rtrn=false;} // Not enough fields
+    if (fieldCount < 1) {
+        rtrn = false;
+    } // Not enough fields
     strncpy(nmeaData.sentenceType, fields[0], sizeof(nmeaData.sentenceType) - 1);
 
     if (String_Compare(nmeaData.sentenceType, "$GPGSA") == 1) {
-        nmeaData.mode = fields[GPGSA_MODE][0];            						// Mode (e.g., 'A' for automatic, 'M' for manual)
-        nmeaData.fixType = atoi(fields[GPGSA_FIX_TYPE]);  						// Fix type (1 = no fix, 2 = 2D fix, 3 = 3D fix)
-        nmeaData.pdop = atof(fields[GPGSA_PDOP]);        	 					// Position dilution of precision
-        nmeaData.hdop = atof(fields[GPGSA_HDOP]);         						// Horizontal dilution of precision
-        nmeaData.vdop = atof(fields[GPGSA_VDOP]);         						// Vertical dilution of precision
+        nmeaData.mode = fields[GPGSA_MODE][0];                                    // Mode (e.g., 'A' for automatic, 'M' for manual)
+        nmeaData.fixType = atoi(fields[GPGSA_FIX_TYPE]);                          // Fix type (1 = no fix, 2 = 2D fix, 3 = 3D fix)
+        nmeaData.pdop = atof(fields[GPGSA_PDOP]);                                 // Position dilution of precision
+        nmeaData.hdop = atof(fields[GPGSA_HDOP]);                                 // Horizontal dilution of precision
+        nmeaData.vdop = atof(fields[GPGSA_VDOP]);                                 // Vertical dilution of precision
 
     } else if (String_Compare(nmeaData.sentenceType, "$GPGSV") == 1) {
-        nmeaData.numOfMessages = atoi(fields[GPGSV_NUM_MESSAGES]);   			// Total number of GSV messages to be transmitted
-        nmeaData.messageNumber = atoi(fields[GPGSV_MESSAGE_NUMBER]); 			// Message number
-        nmeaData.satellitesInView = atoi(fields[GPGSV_SATELLITES_IN_VIEW]); 	// Total number of satellites in view
+        nmeaData.numOfMessages = atoi(fields[GPGSV_NUM_MESSAGES]);                // Total number of GSV messages to be transmitted
+        nmeaData.messageNumber = atoi(fields[GPGSV_MESSAGE_NUMBER]);              // Message number
+        nmeaData.satellitesInView = atoi(fields[GPGSV_SATELLITES_IN_VIEW]);       // Total number of satellites in view
 
     } else if (String_Compare(nmeaData.sentenceType, "$GPRMC") == 1) {
-        strncpy(nmeaData.time, fields[GPRMC_TIME], sizeof(nmeaData.time) - 1); 	// UTC time in hhmmss.ss format
-        nmeaData.status = fields[GPRMC_STATUS][0];                            	// Status (A = active, V = void)
-        nmeaData.latitude = atof(fields[GPRMC_LATITUDE]);                     	// Latitude in ddmm.mmmm format
-        nmeaData.longitude = atof(fields[GPRMC_LONGITUDE]);                   	// Longitude in dddmm.mmmm format
-        nmeaData.speed = atof(fields[GPRMC_SPEED]);                           	// Speed over ground in knots
-        nmeaData.trackAngle = atof(fields[GPRMC_TRACK_ANGLE]);                	// Track angle in degrees True
-        strncpy(nmeaData.date, fields[GPRMC_DATE], sizeof(nmeaData.date) - 1); 	// Date in ddmmyy format
+        strncpy(nmeaData.time, fields[GPRMC_TIME], sizeof(nmeaData.time) - 1);    // UTC time in hhmmss.ss format
+        nmeaData.status = fields[GPRMC_STATUS][0];                                // Status (A = active, V = void)
+        nmeaData.latitude = atof(fields[GPRMC_LATITUDE]);                         // Latitude in ddmm.mmmm format
+        nmeaData.longitude = atof(fields[GPRMC_LONGITUDE]);                       // Longitude in dddmm.mmmm format
+        nmeaData.speed = atof(fields[GPRMC_SPEED]);                               // Speed over ground in knots
+        nmeaData.trackAngle = atof(fields[GPRMC_TRACK_ANGLE]);                    // Track angle in degrees True
+        strncpy(nmeaData.date, fields[GPRMC_DATE], sizeof(nmeaData.date) - 1);    // Date in ddmmyy format
 
     } else if (String_Compare(nmeaData.sentenceType, "$GPVTG") == 1) {
-        nmeaData.trueTrack = atof(fields[GPVTG_TRUE_TRACK]);                  	// True track made good (degrees)
-        nmeaData.magneticTrack = atof(fields[GPVTG_MAGNETIC_TRACK]);          	// Magnetic track made good (degrees)
-        nmeaData.groundSpeedKnots = atof(fields[GPVTG_SPEED_KNOTS]);          	// Ground speed in knots
-        nmeaData.groundSpeedKph = atof(fields[GPVTG_SPEED_KPH]);              	// Ground speed in kilometers per hour
+        nmeaData.trueTrack = atof(fields[GPVTG_TRUE_TRACK]);                      // True track made good (degrees)
+        nmeaData.magneticTrack = atof(fields[GPVTG_MAGNETIC_TRACK]);              // Magnetic track made good (degrees)
+        nmeaData.groundSpeedKnots = atof(fields[GPVTG_SPEED_KNOTS]);              // Ground speed in knots
+        nmeaData.groundSpeedKph = atof(fields[GPVTG_SPEED_KPH]);                  // Ground speed in kilometers per hour
 
     } else if (String_Compare(nmeaData.sentenceType, "$GPGGA") == 1) {
-        strncpy(nmeaData.time, fields[GPGGA_TIME], sizeof(nmeaData.time) - 1); 						// UTC time in hhmmss.ss format
-        nmeaData.latitude = atof(fields[GPGGA_LATITUDE]);                     						// Latitude in ddmm.mmmm format
-        nmeaData.longitude = atof(fields[GPGGA_LONGITUDE]);                   						// Longitude in dddmm.mmmm format
-        strncpy(nmeaData.fixQuality, fields[GPGGA_FIX_QUALITY], sizeof(nmeaData.fixQuality) - 1); 	// Fix quality (0 = invalid, 1 = GPS fix, 2 = DGPS fix)
-        nmeaData.numSatellites = atoi(fields[GPGGA_NUM_SATELLITES]);          						// Number of satellites being tracked
-        nmeaData.hdop = atof(fields[GPGGA_HDOP]);                             						// Horizontal dilution of precision
-        nmeaData.altitude = atof(fields[GPGGA_ALTITUDE]);                     						// Altitude above mean sea level in meters
+        strncpy(nmeaData.time, fields[GPGGA_TIME], sizeof(nmeaData.time) - 1);                      // UTC time in hhmmss.ss format
+        nmeaData.latitude = atof(fields[GPGGA_LATITUDE]);                                           // Latitude in ddmm.mmmm format
+        nmeaData.longitude = atof(fields[GPGGA_LONGITUDE]);                                         // Longitude in dddmm.mmmm format
+        strncpy(nmeaData.fixQuality, fields[GPGGA_FIX_QUALITY], sizeof(nmeaData.fixQuality) - 1);   // Fix quality (0 = invalid, 1 = GPS fix, 2 = DGPS fix)
+        nmeaData.numSatellites = atoi(fields[GPGGA_NUM_SATELLITES]);                                // Number of satellites being tracked
+        nmeaData.hdop = atof(fields[GPGGA_HDOP]);                                                   // Horizontal dilution of precision
+        nmeaData.altitude = atof(fields[GPGGA_ALTITUDE]);                                           // Altitude above mean sea level in meters
 
     } else if (String_Compare(nmeaData.sentenceType, "$PMTKL") == 1) {
-    	USART2_Send_String((uint8_t*)nmea);
+        USART2_Send_String((uint8_t*)nmea);
     }
     return rtrn;
 }
 
+/**
+ * @brief Get the current parsed NMEA data.
+ *
+ * This function returns a pointer to the NMEA data structure
+ * containing the parsed GPS information.
+ *
+ * @return Pointer to the current NMEAData structure.
+ */
 const NMEAData* Get_NMEA_Data() {
     return &nmeaData;
 }
 
+/**
+ * @brief Set the update rate for the GPS module.
+ *
+ * This function sends a command to the GPS module to set the desired update rate
+ * for position updates.
+ *
+ * @param rate Update rate in milliseconds.
+ */
 void GPS_Set_Update_Rate(uint16_t rate){
-	char send[100] = "$";
-	char dest[100] = "PMTK220,";
-	char src[10];
-	char checksumStr[3]; // Buffer to hold the hexadecimal string (2 digits + null terminator)
-	unsigned char checksum;
+    char send[100] = "$";
+    char dest[100] = "PMTK220,";
+    char src[10];
+    char checksumStr[3]; // Buffer to hold the hexadecimal string (2 digits + null terminator)
+    unsigned char checksum;
 
-	itoa(rate, src, 10);
-	String_Concat(dest, src);
+    itoa(rate, src, 10);
+    String_Concat(dest, src);
 
-	checksum = String_XOR_Checksum(dest);
+    checksum = String_XOR_Checksum(dest);
 
-	CHAR_To_HEX_String(checksum, checksumStr);
+    CHAR_To_HEX_String(checksum, checksumStr);
 
-	String_Concat(dest, "*");
-	String_Concat(dest, checksumStr);
-	String_Concat(dest, "\r\n");
-	String_Concat(send, dest);
+    String_Concat(dest, "*");
+    String_Concat(dest, checksumStr);
+    String_Concat(dest, "\r\n");
+    String_Concat(send, dest);
 
-	UART5_Send_String((uint8_t*)send);
+    UART5_Send_String((uint8_t*)send);
 }
 
+/**
+ * @brief Start logging GPS data.
+ *
+ * This function sends a command to the GPS module to start logging GPS data
+ * to the onboard storage.
+ */
 void GPS_Start_Logging(){
-	UART5_Send_String((uint8_t*)"$PMTK185,0*22\r\n");
+    UART5_Send_String((uint8_t*)"$PMTK185,0*22\r\n");
 }
 
+/**
+ * @brief Stop logging GPS data.
+ *
+ * This function sends a command to the GPS module to stop logging GPS data
+ * to the onboard storage.
+ */
 void GPS_Stop_Logging(){
-	UART5_Send_String((uint8_t*)"$PMTK185,1*23\r\n");
+    UART5_Send_String((uint8_t*)"$PMTK185,1*23\r\n");
 }
 
+/**
+ * @brief Dump the full flash data from the GPS module.
+ *
+ * This function sends a command to the GPS module to dump the full flash
+ * data containing logged GPS information.
+ */
 void GPS_Dump_Full_Flash_Data(){
-	UART5_Send_String((uint8_t*)"$PMTK622,0*28\r\n");
+    UART5_Send_String((uint8_t*)"$PMTK622,0*28\r\n");
 }
 
+/**
+ * @brief Dump partial flash data from the GPS module.
+ *
+ * This function sends a command to the GPS module to dump partial flash
+ * data containing logged GPS information.
+ */
 void GPS_Dump_Partial_Flash_Data(){
-	UART5_Send_String((uint8_t*)"$PMTK622,1*29\r\n");
+    UART5_Send_String((uint8_t*)"$PMTK622,1*29\r\n");
 }
 
+/**
+ * @brief Erase flash data from the GPS module.
+ *
+ * This function sends a command to the GPS module to erase all flash
+ * data containing logged GPS information.
+ */
 void GPS_Erase_Flash_Data(){
-	UART5_Send_String((uint8_t*)"$PMTK184,1*22\r\n");
+    UART5_Send_String((uint8_t*)"$PMTK184,1*22\r\n");
 }
 
+/**
+ * @brief Query the logging status of the GPS module.
+ *
+ * This function sends a command to the GPS module to query the current
+ * logging status.
+ */
 void GPS_Query_Logging_Status(){
-	UART5_Send_String((uint8_t*)"$PMTK183*38\r\n");
+    UART5_Send_String((uint8_t*)"$PMTK183*38\r\n");
 }
 
+/**
+ * @brief Configure the GPS module initialization settings.
+ *
+ * This function stops any ongoing logging and sets the update rate for
+ * the GPS module during initialization.
+ */
 void GPS_Configure_Init(){
-	GPS_Stop_Logging();
-	GPS_Set_Update_Rate(2000);
+    GPS_Stop_Logging();
+    GPS_Set_Update_Rate(2000);
 }
 
+/**
+ * @brief Trigger immediate GPS data logging.
+ *
+ * This function sends a command to the GPS module to log data immediately.
+ */
 void GPS_Log_Now(){
-	UART5_Send_String((uint8_t*)"$PMTK186,1*20\r\n");
+    UART5_Send_String((uint8_t*)"$PMTK186,1*20\r\n");
 }
 
+NMEAData* stateData; /**< Pointer to hold the current state data */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#define VALID_FIX_TIME 30000
-NMEAData* stateData;
-
-typedef enum{
-	STATE_IDLE,
-	STATE_FIX,
-	STATE_NAV,
-} gpsState_t;
-
-static bool_t navFix;
-static gpsState_t gpsState;
-static delay_t d1;
-
-
+/**
+ * @brief Initialize the GPS FSM.
+ *
+ * This function initializes the GPS finite state machine (FSM) to the idle state
+ * and sets up the delay timer for state transitions.
+ */
 void gpsFSM_init(){
-	gpsState = STATE_IDLE;
-	delayInit(&d1, VALID_FIX_TIME);
+    gpsState = STATE_IDLE;
+    delayInit(&d1, VALID_FIX_TIME);
 }
 
+/**
+ * @brief Update the GPS FSM based on the current state and GPS data.
+ *
+ * This function updates the GPS finite state machine (FSM) based on the current
+ * state and the parsed GPS data. It manages state transitions and performs
+ * actions such as starting/stopping logging.
+ */
 void gpsFSM_update(){
 
-	stateData = Get_NMEA_Data();
+    stateData = Get_NMEA_Data();
 
-	switch(gpsState){
-		case STATE_IDLE:
-			if (stateData->fixQuality[0]=='1'){
-				gpsState = STATE_FIX;
-				HD44780_Clear();
-				HD44780_Cursor_Position(0, 0);
-				HD44780_PrintStr("Processing Data");
-				HD44780_Cursor_Position(0, 1);
-				HD44780_PrintStr("State: FIX");
-				delayRead(&d1);
-			}
-			break;
-		case STATE_FIX:
-			if (stateData->fixQuality[0]=='1'){
-				if (delayRead(&d1)){
-					gpsState = STATE_NAV;
-					HD44780_Clear();
-					HD44780_Cursor_Position(0, 0);
-					HD44780_PrintStr("Processing Data");
-					HD44780_Cursor_Position(0, 1);
-					HD44780_PrintStr("State: NAV");
-					GPS_Start_Logging();
-				}
-			} else {
-				delayInit(&d1, VALID_FIX_TIME);
-				gpsState = STATE_IDLE;
-				HD44780_Clear();
-				HD44780_Cursor_Position(0, 0);
-				HD44780_PrintStr("Processing Data");
-				HD44780_Cursor_Position(0, 1);
-				HD44780_PrintStr("State: IDLE");
-			}
-			break;
-		case STATE_NAV:
-			if (stateData->fixQuality[0]=='0'){
-				delayInit(&d1, VALID_FIX_TIME);
-				gpsState = STATE_IDLE;
-				HD44780_Clear();
-				HD44780_Cursor_Position(0, 0);
-				HD44780_PrintStr("Processing Data");
-				HD44780_Cursor_Position(0, 1);
-				HD44780_PrintStr("State: IDLE");
-				GPS_Stop_Logging();
-			}
-			break;
-		default:
-			Error_Handler();
-			break;
-	}
+    switch(gpsState){
+        case STATE_IDLE:
+            if (stateData->fixQuality[0]=='1'){
+                gpsState = STATE_FIX;
+                HD44780_Clear();
+                HD44780_Cursor_Position(0, 0);
+                HD44780_PrintStr("Processing Data");
+                HD44780_Cursor_Position(0, 1);
+                HD44780_PrintStr("State: FIX");
+                delayRead(&d1);
+            }
+            break;
+        case STATE_FIX:
+            if (stateData->fixQuality[0]=='1'){
+                if (delayRead(&d1)){
+                    gpsState = STATE_NAV;
+                    HD44780_Clear();
+                    HD44780_Cursor_Position(0, 0);
+                    HD44780_PrintStr("Processing Data");
+                    HD44780_Cursor_Position(0, 1);
+                    HD44780_PrintStr("State: NAV");
+                    GPS_Start_Logging();
+                }
+            } else {
+                delayInit(&d1, VALID_FIX_TIME);
+                gpsState = STATE_IDLE;
+                HD44780_Clear();
+                HD44780_Cursor_Position(0, 0);
+                HD44780_PrintStr("Processing Data");
+                HD44780_Cursor_Position(0, 1);
+                HD44780_PrintStr("State: IDLE");
+            }
+            break;
+        case STATE_NAV:
+            if (stateData->fixQuality[0]=='0'){
+                delayInit(&d1, VALID_FIX_TIME);
+                gpsState = STATE_IDLE;
+                HD44780_Clear();
+                HD44780_Cursor_Position(0, 0);
+                HD44780_PrintStr("Processing Data");
+                HD44780_Cursor_Position(0, 1);
+                HD44780_PrintStr("State: IDLE");
+                GPS_Stop_Logging();
+            }
+            break;
+        default:
+            Error_Handler();
+            break;
+    }
 }
-

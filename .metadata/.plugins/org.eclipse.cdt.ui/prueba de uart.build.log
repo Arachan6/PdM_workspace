@@ -1,28 +1,39 @@
-15:53:36 **** Incremental Build of configuration Debug for project prueba de uart ****
+21:10:46 **** Incremental Build of configuration Debug for project prueba de uart ****
 make -j4 all 
-arm-none-eabi-gcc "../Drivers/API/Src/API_gps.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_gps.d" -MT"Drivers/API/Src/API_gps.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_gps.o"
-../Drivers/API/Src/API_gps.c: In function 'gpsFSM_update':
-../Drivers/API/Src/API_gps.c:166:19: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-  166 |         stateData = Get_NMEA_Data();
-      |                   ^
-../Drivers/API/Src/API_gps.c:214:25: warning: implicit declaration of function 'Error_Handler' [-Wimplicit-function-declaration]
-  214 |                         Error_Handler();
-      |                         ^~~~~~~~~~~~~
-../Drivers/API/Src/API_gps.c: At top level:
-../Drivers/API/Src/API_gps.c:154:15: warning: 'navFix' defined but not used [-Wunused-variable]
-  154 | static bool_t navFix;
-      |               ^~~~~~
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/Core/Inc" -I"/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+../Src/main.c:13: warning: "DEBUG" redefined
+   13 | #define DEBUG true
+      | 
+<command-line>: note: this is the location of the previous definition
+../Src/main.c: In function 'main':
+../Src/main.c:22:5: warning: implicit declaration of function 'gpsFSM_init' [-Wimplicit-function-declaration]
+   22 |     gpsFSM_init();
+      |     ^~~~~~~~~~~
+../Src/main.c:32:9: warning: implicit declaration of function 'HAL_Delay_Wrapper' [-Wimplicit-function-declaration]
+   32 |         HAL_Delay_Wrapper(500);
+      |         ^~~~~~~~~~~~~~~~~
+../Src/main.c:76:9: warning: implicit declaration of function 'gpsFSM_update' [-Wimplicit-function-declaration]
+   76 |         gpsFSM_update();
+      |         ^~~~~~~~~~~~~
+../Src/main.c:84:42: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   84 |                                 nmeaData = Get_NMEA_Data();
+      |                                          ^
+In file included from ../Src/main.c:4:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h: At top level:
+/home/felipe/Desktop/PdM_workspace/prueba de uart/Drivers/API/Inc/API_i2c.h:14:13: warning: 'I2C1_GPIO_Init' declared 'static' but never defined [-Wunused-function]
+   14 | static void I2C1_GPIO_Init();
+      |             ^~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "prueba de uart.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/felipe/Desktop/PdM_workspace/prueba de uart/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prueba de uart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: prueba de uart.elf
  
 arm-none-eabi-size  prueba\ de\ uart.elf 
 arm-none-eabi-objdump -h -S prueba\ de\ uart.elf  > "prueba de uart.list"
    text	   data	    bss	    dec	    hex	filename
-  34292	    468	   5632	  40392	   9dc8	prueba de uart.elf
+  34268	    468	   5632	  40368	   9db0	prueba de uart.elf
 Finished building: default.size.stdout
  
 Finished building: prueba de uart.list
  
 
-15:53:37 Build Finished. 0 errors, 3 warnings. (took 1s.35ms)
+21:10:47 Build Finished. 0 errors, 6 warnings. (took 1s.76ms)
 
