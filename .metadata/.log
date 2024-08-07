@@ -5999,3 +5999,24 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-08-04 15:12:00.384
 !MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-08-06 21:31:03.062 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2024-08-06 21:31:08.769
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-08-06 21:31:11.365
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-08-06 21:31:11.365
+!MESSAGE Log4j2 initialized with config file /home/felipe/Desktop/PdM_workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-08-06 21:31:17.523
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-08-06 21:32:58.822
+!MESSAGE Indexed 'TP Final' (109 sources, 264 headers) in 10.5 sec: 34,390 declarations; 116,068 references; 9 unresolved inclusions; 71 syntax errors; 1,790 unresolved names (1.2%)
