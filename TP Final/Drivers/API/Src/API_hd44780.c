@@ -4,64 +4,56 @@
 
 extern I2C_HandleTypeDef hi2c1;
 
-uint8_t dpFunction;    /**< Display function setting */
-uint8_t dpControl;     /**< Display control setting */
-uint8_t dpMode;        /**< Display mode setting */
-uint8_t dpRows;        /**< Number of display rows */
-uint8_t dpBacklight;   /**< Display backlight setting */
+static uint8_t dpFunction;    /**< Display function setting */
+static uint8_t dpControl;     /**< Display control setting */
+static uint8_t dpMode;        /**< Display mode setting */
+static uint8_t dpRows;        /**< Number of display rows */
+static uint8_t dpBacklight;   /**< Display backlight setting */
 
-static void SendCommand(uint8_t cmd);
-static void SendData(uint8_t data);
-static void ExpanderWrite(uint8_t value);
-static void DelayUS(uint32_t us);
-static void SetCursor(uint8_t col, uint8_t row);
+static void Send_Command(uint8_t cmd);
+static void Send_Data(uint8_t data);
+static void Expander_Write(uint8_t value);
 
 /**
  * @brief Initialize the HD44780 display.
  * @param rows Number of rows on the display.
  */
-void HD44780_Init(uint8_t rows){
+void HD44780_Init(uint8_t rows) {
+    // Set up global variables
     dpRows = rows;
     dpBacklight = LCD_BACKLIGHT;
 
+    // Configuration for 4-bit mode, 2-line display, and 5x8 dots
+    const uint8_t initSequence[] = { 0x03, 0x03, 0x03, 0x02 };
     dpFunction = LCD_4BITMODE | LCD_2LINE | LCD_5x8DOTS;
+    dpMode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
 
-    /* Wait for initialization */
+    // Initialization delay
     HAL_Delay_Wrapper(1000);
 
-    /* 4bit Mode */
-    ExpanderWrite(0x03 << 4);
+    // Execute the initialization sequence
+    for (uint8_t i = 0; i < sizeof(initSequence) / sizeof(initSequence[0]); ++i) {
+        Expander_Write(initSequence[i] << 4);
+        HAL_Delay_Wrapper(i < 3 ? 5 : 1);  // Different delay for last step
+    }
+
+    // Set the display function
+    Send_Command(LCD_FUNCTIONSET | dpFunction);
+
+    // Set the entry mode
+    Send_Command(LCD_ENTRYMODESET | dpMode);
     HAL_Delay_Wrapper(5);
 
-    ExpanderWrite(0x03 << 4);
-    HAL_Delay_Wrapper(5);
-
-    ExpanderWrite(0x03 << 4);
-    HAL_Delay_Wrapper(5);
-
-    ExpanderWrite(0x02 << 4);
-    HAL_Delay_Wrapper(1);
-
-    /* Display Control */
-    SendCommand(LCD_FUNCTIONSET | dpFunction);
-
-    dpControl = LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKON;
-    HD44780_Set_Display(true);
-    HD44780_Clear();
-
-    /* Display Mode */
-    dpMode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
-    SendCommand(LCD_ENTRYMODESET | dpMode);
-    HAL_Delay_Wrapper(5);
-
+    // Return cursor to home position
     HD44780_Home();
 }
+
 
 /**
  * @brief Set the display to home position.
  */
 void HD44780_Home(){
-    SendCommand(LCD_RETURNHOME);
+    Send_Command(LCD_RETURNHOME);
     HAL_Delay_Wrapper(2);
 }
 
@@ -69,8 +61,12 @@ void HD44780_Home(){
  * @brief Print a string on the display.
  * @param c String to be printed.
  */
-void HD44780_PrintStr(const char c[]){
-    while(*c) SendData(*c++);
+void HD44780_Print_String(const char str[]) {
+    int i = 0;
+    while (str[i] != '\0') {
+        Send_Data(str[i]);
+        i++;
+    }
 }
 
 /**
@@ -83,7 +79,7 @@ void HD44780_Set_Display(bool_t displayOn) {
     } else {
         dpControl &= ~LCD_DISPLAYON; // Clear the display on flag
     }
-    SendCommand(LCD_DISPLAYCONTROL | dpControl); // Send the command to the display
+    Send_Command(LCD_DISPLAYCONTROL | dpControl); // Send the command to the display
 }
 
 /**
@@ -96,7 +92,7 @@ void HD44780_Set_Blink(bool_t blinkOn) {
     } else {
         dpControl &= ~LCD_BLINKON; // Clear the blink on flag
     }
-    SendCommand(LCD_DISPLAYCONTROL | dpControl); // Send the command to the display
+    Send_Command(LCD_DISPLAYCONTROL | dpControl); // Send the command to the display
 }
 
 /**
@@ -109,27 +105,33 @@ void HD44780_Set_Cursor(bool_t cursorOn) {
     } else {
         dpControl &= ~LCD_CURSORON; // Clear the cursor on flag
     }
-    SendCommand(LCD_DISPLAYCONTROL | dpControl); // Send the command to the display
+    Send_Command(LCD_DISPLAYCONTROL | dpControl); // Send the command to the display
 }
 
 /**
  * @brief Set the cursor position on the display.
- * @param col Column position.
- * @param row Row position.
+ * @param column Column position.
+ * @param line line position.
  */
-void HD44780_Cursor_Position(uint8_t col, uint8_t row){
-    int row_offsets[] = { 0x00, 0x40, 0x14, 0x54 };
-    if (row >= dpRows){
-        row = dpRows-1;
+void HD44780_Move_Cursor(uint8_t column, uint8_t line) {
+	// The HD44780 LCD controller has a character display RAM (DDRAM) where it stores the characters to be displayed.
+	// The DDRAM is organized into rows, and each row has a base address. This supports up to 4 rows.
+    const int rowAddressMap[] = { 0x00, 0x40, 0x14, 0x54 };
+    uint8_t maxLine = dpRows > 0 ? dpRows - 1 : 0;
+
+    if (line > maxLine) {
+        line = maxLine;
     }
-    SendCommand(LCD_SETDDRAMADDR | (col + row_offsets[row]));
+
+    uint8_t ddramAddress = column + rowAddressMap[line];
+    Send_Command(LCD_SETDDRAMADDR | ddramAddress);
 }
 
 /**
  * @brief Clear the display.
  */
 void HD44780_Clear(){
-    SendCommand(LCD_CLEARDISPLAY);
+    Send_Command(LCD_CLEARDISPLAY);
     HAL_Delay_Wrapper(2);
 }
 
@@ -137,29 +139,29 @@ void HD44780_Clear(){
  * @brief Send data to the display.
  * @param data Data to be sent.
  */
-static void SendData(uint8_t data){
+static void Send_Data(uint8_t data){
     uint8_t highnib = data & 0xF0;
     uint8_t lownib = (data << 4) & 0xF0;
-    ExpanderWrite(highnib | RS);
-    ExpanderWrite(lownib | RS);
+    Expander_Write(highnib | RS);
+    Expander_Write(lownib | RS);
 }
 
 /**
  * @brief Send a command to the display.
  * @param cmd Command to be sent.
  */
-static void SendCommand(uint8_t cmd){
+static void Send_Command(uint8_t cmd){
     uint8_t highnib = cmd & 0xF0;
     uint8_t lownib = (cmd << 4) & 0xF0;
-    ExpanderWrite(highnib);
-    ExpanderWrite(lownib);
+    Expander_Write(highnib);
+    Expander_Write(lownib);
 }
 
 /**
  * @brief Write a value to the I2C expander.
  * @param value Value to be written.
  */
-static void ExpanderWrite(uint8_t value)
+static void Expander_Write(uint8_t value)
 {
     uint8_t data = value | dpBacklight;
     I2C_Master_Transmit_Wrapper(&hi2c1, DEVICE_ADDR, (uint8_t*)&data, 1, 10);

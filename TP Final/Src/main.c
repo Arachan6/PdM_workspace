@@ -26,50 +26,50 @@ int main(void){
 	HD44780_Set_Display(true);
 	HD44780_Set_Cursor(true);
 	HD44780_Set_Blink(true);
-	HD44780_Cursor_Position(0, 0);
-	HD44780_PrintStr("LCD Initialized!");
+	HD44780_Move_Cursor(0, 0);
+	HD44780_Print_String("LCD Initialized!");
 
 	HAL_Delay_Wrapper(500);
 	HD44780_Clear();
-	HD44780_Cursor_Position(0, 0);
+	HD44780_Move_Cursor(0, 0);
 	if (UART5_Init()){
-		HD44780_PrintStr("GPS UART");
-		HD44780_Cursor_Position(0, 1);
-		HD44780_PrintStr("Initialized!");
+		HD44780_Print_String("GPS UART");
+		HD44780_Move_Cursor(0, 1);
+		HD44780_Print_String("Initialized!");
 	} else {
-		HD44780_PrintStr("GPS UART Error!");
+		HD44780_Print_String("GPS UART Error!");
 		Error_Handler();
 	}
 
 	HAL_Delay_Wrapper(500);
 	HD44780_Clear();
-	HD44780_Cursor_Position(0, 0);
+	HD44780_Move_Cursor(0, 0);
     if (USART2_Init()){
-    	HD44780_PrintStr("PC UART");
-		HD44780_Cursor_Position(0, 1);
-		HD44780_PrintStr("Initialized!");
+    	HD44780_Print_String("PC UART");
+    	HD44780_Move_Cursor(0, 1);
+    	HD44780_Print_String("Initialized!");
     } else {
-    	HD44780_PrintStr("PC UART Error!");
+    	HD44780_Print_String("PC UART Error!");
     	Error_Handler();
     }
 
     HAL_Delay_Wrapper(500);
 	HD44780_Clear();
-	HD44780_Cursor_Position(0, 0);
-	HD44780_PrintStr("Configuring GPS");
+	HD44780_Move_Cursor(0, 0);
+	HD44780_Print_String("Configuring GPS");
 
 	HAL_Delay_Wrapper(500);
 	GPS_Configure_Init();
 	HD44780_Clear();
-	HD44780_Cursor_Position(0, 0);
-	HD44780_PrintStr("GPS Configured!");
+	HD44780_Move_Cursor(0, 0);
+	HD44780_Print_String("GPS Configured!");
 
 	HAL_Delay_Wrapper(500);
 	HD44780_Clear();
-	HD44780_Cursor_Position(0, 0);
-	HD44780_PrintStr("Processing Data");
-	HD44780_Cursor_Position(0, 1);
-	HD44780_PrintStr("State: IDLE");
+	HD44780_Move_Cursor(0, 0);
+	HD44780_Print_String("Processing Data");
+	HD44780_Move_Cursor(0, 1);
+	HD44780_Print_String("State: IDLE");
 	HAL_Delay_Wrapper(500);
 
     while (1){

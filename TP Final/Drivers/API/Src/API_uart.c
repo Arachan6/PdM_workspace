@@ -208,14 +208,14 @@ void USART2_IRQHandler(void) {
     HAL_UART_IRQHandler(&huart2);
 }
 
-uint8_t nmea_incoming_buffer[NMEA_BUFFER_SIZE];
-uint8_t nmea_index = 0;
+static uint8_t nmea_incoming_buffer[NMEA_BUFFER_SIZE];
+static uint8_t nmea_index = 0;
 
-uint8_t pc_incoming_buffer[PC_BUFFER_SIZE];
-uint8_t pc_ready_buffer[PC_BUFFER_SIZE];
-uint8_t pc_index = 0;
-bool_t pc_ready = false;
-bool_t receiving_data = false;
+static uint8_t pc_incoming_buffer[PC_BUFFER_SIZE];
+static uint8_t pc_ready_buffer[PC_BUFFER_SIZE];
+static uint8_t pc_index = 0;
+static bool_t pc_ready = false;
+static bool_t receiving_data = false;
 
 /**
  * @brief UART receive complete callback function.

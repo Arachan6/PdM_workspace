@@ -64,7 +64,7 @@ void HD44780_Home();
 void HD44780_Set_Display(bool_t displayOn);
 void HD44780_Set_Blink(bool_t blinkOn);
 void HD44780_Set_Cursor(bool_t cursorOn);
-void HD44780_Cursor_Position(uint8_t, uint8_t);
-void HD44780_PrintStr(const char[]);
+void HD44780_Move_Cursor(uint8_t, uint8_t);
+void HD44780_Print_String(const char[]);
 
 #endif /* HD44780_H_ */

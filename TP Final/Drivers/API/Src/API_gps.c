@@ -244,10 +244,10 @@ void gpsFSM_update(){
             if (stateData->fixQuality[0]=='1'){
                 gpsState = STATE_FIX;
                 HD44780_Clear();
-                HD44780_Cursor_Position(0, 0);
-                HD44780_PrintStr("Processing Data");
-                HD44780_Cursor_Position(0, 1);
-                HD44780_PrintStr("State: FIX");
+                HD44780_Move_Cursor(0, 0);
+                HD44780_Print_String("Processing Data");
+                HD44780_Move_Cursor(0, 1);
+                HD44780_Print_String("State: FIX");
                 delayRead(&d1);
             }
             break;
@@ -256,20 +256,20 @@ void gpsFSM_update(){
                 if (delayRead(&d1)){
                     gpsState = STATE_NAV;
                     HD44780_Clear();
-                    HD44780_Cursor_Position(0, 0);
-                    HD44780_PrintStr("Processing Data");
-                    HD44780_Cursor_Position(0, 1);
-                    HD44780_PrintStr("State: NAV");
+                    HD44780_Move_Cursor(0, 0);
+                    HD44780_Print_String("Processing Data");
+                    HD44780_Move_Cursor(0, 1);
+                    HD44780_Print_String("State: NAV");
                     GPS_Start_Logging();
                 }
             } else {
                 delayInit(&d1, VALID_FIX_TIME);
                 gpsState = STATE_IDLE;
                 HD44780_Clear();
-                HD44780_Cursor_Position(0, 0);
-                HD44780_PrintStr("Processing Data");
-                HD44780_Cursor_Position(0, 1);
-                HD44780_PrintStr("State: IDLE");
+                HD44780_Move_Cursor(0, 0);
+                HD44780_Print_String("Processing Data");
+                HD44780_Move_Cursor(0, 1);
+                HD44780_Print_String("State: IDLE");
             }
             break;
         case STATE_NAV:
@@ -277,10 +277,10 @@ void gpsFSM_update(){
                 delayInit(&d1, VALID_FIX_TIME);
                 gpsState = STATE_IDLE;
                 HD44780_Clear();
-                HD44780_Cursor_Position(0, 0);
-                HD44780_PrintStr("Processing Data");
-                HD44780_Cursor_Position(0, 1);
-                HD44780_PrintStr("State: IDLE");
+                HD44780_Move_Cursor(0, 0);
+                HD44780_Print_String("Processing Data");
+                HD44780_Move_Cursor(0, 1);
+                HD44780_Print_String("State: IDLE");
                 GPS_Stop_Logging();
             }
             break;
